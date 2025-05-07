@@ -1,0 +1,45 @@
+{
+  "name": "@rn-primitives-extras/monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "turbo dev --concurrency=38",
+    "dev:primitives": "turbo dev --filter=./packages/* --concurrency=35",
+    "dev:expo-nativewind": "turbo dev --filter=./apps/expo-nativewind",
+    "dev:nextjs-nativewind": "turbo dev --filter=./apps/nextjs-nativewind",
+    "dev:docs": "turbo dev --filter=./apps/docs",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "build": "turbo build --filter=./packages/*",
+    "build:docs": "turbo build --filter=./apps/docs",
+    "publish-all:primitives:next": "turbo pub:next --filter=./packages/* --concurrency=33",
+    "publish-all:primitives": "turbo pub:release --filter=./packages/* --concurrency=33",
+    "clean": "turbo clean && rm -rf .turbo node_modules"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.1",
+    "typescript": "^5.8.3"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@babel/*",
+        "expo-modules-*",
+        "typescript"
+      ]
+    },
+    "overrides": {
+      "react": "19.0.0"
+    }
+  },
+  "prettier": {
+    "printWidth": 100,
+    "tabWidth": 2,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "trailingComma": "es5"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "packageManager": "pnpm@10.10.0"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@rn-primitives/nextjs-nativewind",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "clean": "rm -rf .next node_modules"
+  },
+  "dependencies": {
+    "@rn-primitives/table": "workspace:*",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react-native": "^0.482.0",
+    "nativewind": "^4.1.23",
+    "next": "15.2.2",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-native": "0.79.1",
+    "react-native-svg": "15.11.2",
+    "react-native-web": "~0.20.0",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "19.0.10",
+    "@types/react-dom": "19.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.8.3"
+  }
+}
