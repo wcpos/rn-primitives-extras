@@ -1,4 +1,18 @@
+import type { StyleProp, ViewStyle } from 'react-native';
+
+interface BaseVirtualizedListHandle {
+  scrollToIndex(params: {
+    index: number;
+    align?: 'start' | 'center' | 'end';
+    animated?: boolean;
+  }): void;
+  scrollToOffset(offset: number, animated?: boolean): void;
+}
+
 interface BaseVirtualizedListProps<T> {
+  /** Ref to the list */
+  ref: React.Ref<BaseVirtualizedListHandle>;
+
   /** Dataset – keep it immutable for perf */
   data: readonly T[];
 
@@ -20,15 +34,9 @@ interface BaseVirtualizedListProps<T> {
   /** Infinite scroll */
   onEndReached?: () => void;
   onEndReachedThreshold?: number; // 0-1, default 0.5
-}
 
-interface BaseVirtualizedListHandle {
-  scrollToIndex(params: {
-    index: number;
-    align?: 'start' | 'center' | 'end';
-    animated?: boolean;
-  }): void;
-  scrollToOffset(offset: number, animated?: boolean): void;
+  /** Style to apply to the list */
+  style?: StyleProp<ViewStyle>;
 }
 
 export type { BaseVirtualizedListProps, BaseVirtualizedListHandle };

@@ -1,16 +1,32 @@
 import { View } from '@rn-primitives/core';
 import { VirtualizedList as VirtualizedListWeb } from '../web';
-import type { VirtualizedListProps } from './types';
+import type { VirtualizedListHandle, VirtualizedListProps } from './types';
 
-function VirtualizedList<T>({ native: _native, style, web, ...props }: VirtualizedListProps<T>) {
+function VirtualizedList<T>({
+  ref,
+  native: _native,
+  style,
+  web,
+  ...props
+}: VirtualizedListProps<T>) {
   if (style) {
     return (
       <View style={style} asChild>
-        <VirtualizedListWeb {...props} {...web} />
+        <VirtualizedListWeb
+          ref={ref as unknown as React.Ref<VirtualizedListHandle>}
+          {...props}
+          {...web}
+        />
       </View>
     );
   }
-  return <VirtualizedListWeb {...props} {...web} />;
+  return (
+    <VirtualizedListWeb
+      ref={ref as unknown as React.Ref<VirtualizedListHandle>}
+      {...props}
+      {...web}
+    />
+  );
 }
 
 export { VirtualizedList };

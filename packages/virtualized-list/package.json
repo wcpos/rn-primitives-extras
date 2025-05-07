@@ -40,6 +40,7 @@
   "dependencies": {
     "@shopify/flash-list": "1.7.6",
     "@rn-primitives/core": "workspace:*",
+    "@rn-primitives/hooks": "workspace:*",
     "@rn-primitives/types": "workspace:*",
     "@rn-primitives/utils": "workspace:*",
     "@tanstack/react-virtual": "^3.13.6"

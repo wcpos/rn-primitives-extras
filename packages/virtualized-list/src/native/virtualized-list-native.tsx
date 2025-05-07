@@ -6,7 +6,7 @@ function VirtualizedList<T>(props: VirtualizedListProps<T>) {
       '`VirtualizedList` from @rn-primitives/virtualized-list/native is only supported on native.'
     );
   }
-  return null;
+  return null as React.ReactNode;
 }
 
 export { VirtualizedList };

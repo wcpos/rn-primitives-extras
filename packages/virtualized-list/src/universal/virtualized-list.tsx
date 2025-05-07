@@ -1,8 +1,14 @@
 import { VirtualizedList as VirtualizedListNative } from '../native';
-import type { VirtualizedListProps } from './types';
+import type { VirtualizedListHandle, VirtualizedListProps } from './types';
 
-function VirtualizedList<T>({ web: _web, native, ...props }: VirtualizedListProps<T>) {
-  return <VirtualizedListNative {...props} {...native} />;
+function VirtualizedList<T>({ ref, web: _web, native, ...props }: VirtualizedListProps<T>) {
+  return (
+    <VirtualizedListNative
+      ref={ref as unknown as React.Ref<VirtualizedListHandle>}
+      {...props}
+      {...native}
+    />
+  );
 }
 
 export { VirtualizedList };
