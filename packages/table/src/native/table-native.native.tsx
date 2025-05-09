@@ -27,8 +27,8 @@ const HeaderRow = ({ children, style, ...props }: RowProps) => {
 
 const HeaderCell = ({ children, style, ...props }: HeaderCellProps) => {
   return (
-    <View {...props} style={[{ flex: 1 }, style]}>
-      <Text>{children}</Text>
+    <View {...props} style={[{ flex: 1, width: 100 }, style]}>
+      {children}
     </View>
   );
 };
@@ -47,8 +47,8 @@ const Row = ({ children, style, ...props }: RowProps) => {
 
 const Cell = ({ children, style, ...props }: CellProps) => {
   return (
-    <View {...props} style={[{ flex: 1 }, style]}>
-      <Text>{children}</Text>
+    <View {...props} style={[{ flex: 1, width: 100 }, style]}>
+      {children}
     </View>
   );
 };
@@ -57,14 +57,18 @@ const Footer = ({ children, ...props }: FooterProps) => {
   return <View {...props}>{children}</View>;
 };
 
-const FooterRow = ({ children, ...props }: RowProps) => {
-  return <View {...props}>{children}</View>;
+const FooterRow = ({ children, style, ...props }: RowProps) => {
+  return (
+    <View {...props} style={[{ flexDirection: 'row' }, style]}>
+      {children}
+    </View>
+  );
 };
 
 const FooterCell = ({ children, style, ...props }: HeaderCellProps) => {
   return (
-    <View {...props} style={[{ flex: 1 }, style]}>
-      <Text>{children}</Text>
+    <View {...props} style={[{ flex: 1, width: 100 }, style]}>
+      {children}
     </View>
   );
 };

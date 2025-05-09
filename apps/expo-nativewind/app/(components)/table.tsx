@@ -12,6 +12,7 @@ import {
   TableHeaderRow,
   TableRow,
 } from '~/components/ui/table';
+import { Text } from '@rn-primitives/core';
 
 export default function TableScreen() {
   const { width } = useWindowDimensions();
@@ -50,7 +51,7 @@ export default function TableScreen() {
               <TableHeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHeaderCell key={header.id}>
-                    {flexRender(header.column.columnDef.header, header.getContext())}
+                    <Text>{String(header.column.columnDef.header)}</Text>
                   </TableHeaderCell>
                 ))}
               </TableHeaderRow>
@@ -61,7 +62,7 @@ export default function TableScreen() {
               <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <Text>{String(cell.getValue())}</Text>
                   </TableCell>
                 ))}
               </TableRow>
