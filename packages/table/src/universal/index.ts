@@ -9,7 +9,7 @@ export {
   Footer,
   FooterRow,
   FooterCell,
-} from './universal/table';
+} from './table';
 
 export type {
   RootProps,
@@ -19,4 +19,4 @@ export type {
   RowProps,
   CellProps,
   FooterProps,
-} from './universal/types';
+} from './types';

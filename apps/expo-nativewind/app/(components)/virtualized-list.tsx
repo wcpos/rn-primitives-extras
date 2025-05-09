@@ -10,7 +10,7 @@ interface Row {
   title: string;
 }
 
-const DATA: Row[] = Array.from({ length: 500 }, (_, i) => ({
+const DATA: Row[] = Array.from({ length: 5000 }, (_, i) => ({
   title: `Item #${i + 1}`,
 }));
 

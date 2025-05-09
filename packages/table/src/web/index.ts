@@ -1,15 +1,15 @@
 export {
-  Root,
-  Header,
-  HeaderRow,
-  HeaderCell,
   Body,
-  Row,
   Cell,
   Footer,
-  FooterRow,
   FooterCell,
-} from './universal/table';
+  FooterRow,
+  Header,
+  HeaderCell,
+  HeaderRow,
+  Root,
+  Row,
+} from './table-web';
 
 export type {
   RootProps,
@@ -19,4 +19,4 @@ export type {
   RowProps,
   CellProps,
   FooterProps,
-} from './universal/types';
+} from './types';

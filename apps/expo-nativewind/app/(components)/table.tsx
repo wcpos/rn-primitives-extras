@@ -1,40 +1,73 @@
 import { Stack } from 'expo-router';
 import * as React from 'react';
-import { Alert, FlatList, ScrollView, View, useWindowDimensions } from 'react-native';
+import { ScrollView, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Button } from '~/components/ui/button';
+import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
 import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
-  TableHead,
   TableHeader,
+  TableHeaderCell,
+  TableHeaderRow,
   TableRow,
 } from '~/components/ui/table';
-import { Text } from '~/components/ui/text';
-import { ChevronDown } from '~/lib/icons/ChevronDown';
-import { cn } from '~/lib/utils';
-
-const MIN_COLUMN_WIDTHS = [120, 120, 100, 120];
 
 export default function TableScreen() {
   const { width } = useWindowDimensions();
-  const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
   const insets = useSafeAreaInsets();
 
-  const columnWidths = React.useMemo(() => {
-    return MIN_COLUMN_WIDTHS.map((minWidth) => {
-      const evenWidth = width / MIN_COLUMN_WIDTHS.length;
-      return evenWidth > minWidth ? evenWidth : minWidth;
-    });
-  }, [width]);
+  const table = useReactTable<(typeof INVOICES)[0]>({
+    columns: [
+      {
+        header: 'Invoice',
+        accessorKey: 'invoice',
+      },
+      {
+        header: 'Payment Status',
+        accessorKey: 'paymentStatus',
+      },
+      {
+        header: 'Total Amount',
+        accessorKey: 'totalAmount',
+      },
+      {
+        header: 'Payment Method',
+        accessorKey: 'paymentMethod',
+      },
+    ],
+    data: INVOICES,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   return (
     <>
       <Stack.Screen options={{ headerShadowVisible: false }} />
       <ScrollView horizontal bounces={false} showsHorizontalScrollIndicator={false}>
-        <Table />
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableHeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHeaderCell key={header.id}>
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHeaderCell>
+                ))}
+              </TableHeaderRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.map((row) => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </ScrollView>
     </>
   );
