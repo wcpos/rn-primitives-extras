@@ -1,15 +1,25 @@
 import type { Prettify } from '@rn-primitives/types';
-import type { BaseVirtualizedListHandle, BaseVirtualizedListProps } from '../base-types';
-import type { VirtualizedListProps as VirtualizedListPropsNativeOnly } from '../native/types';
-import type { VirtualizedListProps as VirtualizedListPropsWebOnly } from '../web/types';
+import type { BaseItemProps, BaseRootProps, BaseVirtualizedListHandle } from '../base-types';
+import type {
+  ItemProps as ItemPropsNativeOnly,
+  RootProps as RootPropsNativeOnly,
+} from '../native/types';
+import type { ItemProps as ItemPropsWebOnly, RootProps as RootPropsWebOnly } from '../web/types';
 
-type VirtualizedListProps<T> = Prettify<
-  BaseVirtualizedListProps<T> & {
-    native?: VirtualizedListPropsNativeOnly<T>;
-    web?: VirtualizedListPropsWebOnly<T>;
+type RootProps<T> = Prettify<
+  BaseRootProps<T> & {
+    native?: RootPropsNativeOnly<T>;
+    web?: RootPropsWebOnly<T>;
+  }
+>;
+
+type ItemProps<T> = Prettify<
+  BaseItemProps<T> & {
+    native?: ItemPropsNativeOnly<T>;
+    web?: ItemPropsWebOnly<T>;
   }
 >;
 
 type VirtualizedListHandle = BaseVirtualizedListHandle;
 
-export type { VirtualizedListProps, VirtualizedListHandle };
+export type { ItemProps, RootProps, VirtualizedListHandle };

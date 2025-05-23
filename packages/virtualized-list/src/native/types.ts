@@ -1,8 +1,8 @@
 import type { FlashListProps } from '@shopify/flash-list';
-import type { BaseVirtualizedListProps } from '../base-types';
+import type { BaseRootProps, BaseItemProps } from '../base-types';
 
-type VirtualizedListProps<T> = BaseVirtualizedListProps<T>;
-type VirtualizedListPropsNativeOnly<T> = Omit<
+type RootProps<T> = BaseRootProps<T> & BasePropsNativeOnly<T>;
+type BasePropsNativeOnly<T> = Omit<
   FlashListProps<T>,
   | 'ref'
   | 'data'
@@ -15,4 +15,7 @@ type VirtualizedListPropsNativeOnly<T> = Omit<
   | 'onEndReachedThreshold'
 >;
 
-export type { VirtualizedListProps, VirtualizedListPropsNativeOnly };
+type ItemProps<T> = BaseItemProps<T>;
+type RootPropsNativeOnly<T> = {};
+
+export type { RootProps, BasePropsNativeOnly, ItemProps, RootPropsNativeOnly };

@@ -1,32 +1,27 @@
 import { View } from '@rn-primitives/core';
-import { VirtualizedList as VirtualizedListWeb } from '../web';
-import type { VirtualizedListHandle, VirtualizedListProps } from './types';
+import { Root as RootWeb, Item as ItemWeb, useRootContext, useItemContext } from '../web';
+import type { VirtualizedListHandle, RootProps, ItemProps } from './types';
 
-function VirtualizedList<T>({
-  ref,
-  native: _native,
-  style,
-  web,
-  ...props
-}: VirtualizedListProps<T>) {
+function Root<T>({ ref, native: _native, style, web, ...props }: RootProps<T>) {
   if (style) {
     return (
       <View style={style} asChild>
-        <VirtualizedListWeb
-          ref={ref as unknown as React.Ref<VirtualizedListHandle>}
-          {...props}
-          {...web}
-        />
+        <RootWeb ref={ref as any} {...props} {...web} />
       </View>
     );
   }
-  return (
-    <VirtualizedListWeb
-      ref={ref as unknown as React.Ref<VirtualizedListHandle>}
-      {...props}
-      {...web}
-    />
-  );
+  return <RootWeb ref={ref as any} {...props} {...web} />;
 }
 
-export { VirtualizedList };
+function Item<T>({ ref, native: _native, style, web, ...props }: ItemProps<T>) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <ItemWeb ref={ref as any} {...props} {...web} />
+      </View>
+    );
+  }
+  return <ItemWeb ref={ref as any} {...props} {...web} />;
+}
+
+export { Root, Item, useRootContext, useItemContext };

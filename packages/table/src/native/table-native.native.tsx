@@ -9,68 +9,44 @@ import type {
   RowProps,
 } from './types';
 
-const Root = ({ children, ...props }: RootProps) => {
-  return <View {...props}>{children}</View>;
+const Root = (props: RootProps) => {
+  return <View {...props} />;
 };
 
-const Header = ({ children, ...props }: HeaderProps) => {
-  return <View {...props}>{children}</View>;
+const Header = (props: HeaderProps) => {
+  return <View {...props} />;
 };
 
-const HeaderRow = ({ children, style, ...props }: RowProps) => {
-  return (
-    <View {...props} style={[{ flexDirection: 'row' }, style]}>
-      {children}
-    </View>
-  );
+const HeaderRow = (props: RowProps) => {
+  return <View {...props} style={[{ flexDirection: 'row' }]} />;
 };
 
-const HeaderCell = ({ children, style, ...props }: HeaderCellProps) => {
-  return (
-    <View {...props} style={[{ flex: 1, width: 100 }, style]}>
-      {children}
-    </View>
-  );
+const HeaderCell = (props: HeaderCellProps) => {
+  return <View {...props} style={[{ flex: 1 }]} />;
 };
 
-const Body = ({ children, ...props }: BodyProps) => {
-  return <View {...props}>{children}</View>;
+const Body = (props: BodyProps) => {
+  return <View {...props} />;
 };
 
-const Row = ({ children, style, ...props }: RowProps) => {
-  return (
-    <View {...props} style={[{ flexDirection: 'row' }, style]}>
-      {children}
-    </View>
-  );
+const Row = (props: RowProps) => {
+  return <View {...props} style={[{ flexDirection: 'row' }]} />;
 };
 
-const Cell = ({ children, style, ...props }: CellProps) => {
-  return (
-    <View {...props} style={[{ flex: 1, width: 100 }, style]}>
-      {children}
-    </View>
-  );
+const Cell = (props: CellProps) => {
+  return <View {...props} style={[{ flex: 1 }]} />;
 };
 
-const Footer = ({ children, ...props }: FooterProps) => {
-  return <View {...props}>{children}</View>;
+const Footer = (props: FooterProps) => {
+  return <View {...props} />;
 };
 
-const FooterRow = ({ children, style, ...props }: RowProps) => {
-  return (
-    <View {...props} style={[{ flexDirection: 'row' }, style]}>
-      {children}
-    </View>
-  );
+const FooterRow = (props: RowProps) => {
+  return <View {...props} style={[{ flexDirection: 'row' }]} />;
 };
 
-const FooterCell = ({ children, style, ...props }: HeaderCellProps) => {
-  return (
-    <View {...props} style={[{ flex: 1, width: 100 }, style]}>
-      {children}
-    </View>
-  );
+const FooterCell = (props: HeaderCellProps) => {
+  return <View {...props} style={[{ flex: 1 }]} />;
 };
 
 export { Root, Header, HeaderRow, HeaderCell, Body, Row, Cell, Footer, FooterRow, FooterCell };

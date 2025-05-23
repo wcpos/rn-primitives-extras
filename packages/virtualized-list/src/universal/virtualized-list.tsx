@@ -1,14 +1,12 @@
-import { VirtualizedList as VirtualizedListNative } from '../native';
-import type { VirtualizedListHandle, VirtualizedListProps } from './types';
+import { Root as RootNative, Item as ItemNative, useItemContext, useRootContext } from '../native';
+import type { VirtualizedListHandle, RootProps, ItemProps } from './types';
 
-function VirtualizedList<T>({ ref, web: _web, native, ...props }: VirtualizedListProps<T>) {
-  return (
-    <VirtualizedListNative
-      ref={ref as unknown as React.Ref<VirtualizedListHandle>}
-      {...props}
-      {...native}
-    />
-  );
+function Root<T>({ ref, web: _web, native, ...props }: RootProps<T>) {
+  return <RootNative ref={ref as any} {...props} {...native} />;
 }
 
-export { VirtualizedList };
+function Item<T>({ ref, web: _web, native, ...props }: any) {
+  return <ItemNative ref={ref as any} {...props} {...native} />;
+}
+
+export { Root, Item, useRootContext, useItemContext };

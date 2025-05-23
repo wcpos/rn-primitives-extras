@@ -15,7 +15,7 @@ const TableHeaderRow = ({ className, ...props }: TablePrimitive.RowProps) => (
   <TextClassContext.Provider value='text-muted-foreground'>
     <TablePrimitive.HeaderRow
       className={cn(
-        'h-12 px-4 text-left justify-center font-medium [&:has([role=checkbox])]:pr-0',
+        'h-12 text-left justify-center font-medium [&:has([role=checkbox])]:pr-0',
         className
       )}
       {...props}

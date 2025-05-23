@@ -1,11 +1,9 @@
-import { View } from '@rn-primitives/core';
 import * as VirtualizedListPrimitive from '@rn-primitives/virtualized-list';
 
-const VirtualizedList = (props: VirtualizedListPrimitive.VirtualizedListProps) => {
-  return <VirtualizedListPrimitive.VirtualizedList {...props} />;
-};
+const VirtualizedList = VirtualizedListPrimitive.Root;
+const VirtualizedListItem = VirtualizedListPrimitive.Item;
 
-type VirtualizedListHandle = VirtualizedListPrimitive.VirtualizedListHandle;
+const useItemContext = VirtualizedListPrimitive.useItemContext;
+const useRootContext = VirtualizedListPrimitive.useRootContext;
 
-export { VirtualizedList };
-export type { VirtualizedListHandle };
+export { VirtualizedList, VirtualizedListItem, useItemContext, useRootContext };

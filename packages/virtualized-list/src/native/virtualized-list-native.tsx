@@ -1,6 +1,7 @@
-import type { VirtualizedListProps } from './types';
+import type { RootProps, ItemProps } from './types';
+import type { RootContextReturnType, ItemContextReturnType } from '../utils/contexts';
 
-function VirtualizedList<T>(props: VirtualizedListProps<T>) {
+function Root<T>(props: RootProps<T>) {
   if (process.env.NODE_ENV === 'development') {
     console.log(
       '`VirtualizedList` from @rn-primitives/virtualized-list/native is only supported on native.'
@@ -9,4 +10,27 @@ function VirtualizedList<T>(props: VirtualizedListProps<T>) {
   return null as React.ReactNode;
 }
 
-export { VirtualizedList };
+function Item<T>(props: ItemProps<T>) {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(
+      '`VirtualizedListItem` from @rn-primitives/virtualized-list/native is only supported on native.'
+    );
+  }
+  return null as React.ReactNode;
+}
+
+const useRootContext = () => {
+  throw new Error(
+    'Cannot access the native useRootContext on the web. Please import from `@rn-primitives/virtualized-list` or `@rn-primitives/virtualized-list/native`'
+  );
+  return {} as RootContextReturnType;
+};
+
+const useItemContext = () => {
+  throw new Error(
+    'Cannot access the native useItemContext on the web. Please import from `@rn-primitives/virtualized-list` or `@rn-primitives/virtualized-list/native`'
+  );
+  return {} as ItemContextReturnType;
+};
+
+export { Root, Item, useRootContext, useItemContext };

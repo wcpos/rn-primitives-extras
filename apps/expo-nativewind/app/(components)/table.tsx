@@ -44,7 +44,7 @@ export default function TableScreen() {
   return (
     <>
       <Stack.Screen options={{ headerShadowVisible: false }} />
-      <ScrollView horizontal bounces={false} showsHorizontalScrollIndicator={false}>
+      <ScrollView bounces={false} contentContainerClassName='w-full'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

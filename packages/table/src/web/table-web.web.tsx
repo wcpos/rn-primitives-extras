@@ -1,3 +1,4 @@
+import { View } from '@rn-primitives/core/dist/web';
 import {
   BodyProps,
   CellProps,
@@ -8,44 +9,44 @@ import {
   RowProps,
 } from './types';
 
-function Root({ children, ...props }: RootProps) {
-  return <table {...props}>{children}</table>;
+function Root(props: RootProps) {
+  return <View as='table' {...props} />;
 }
 
-function Header({ children, ...props }: HeaderProps) {
-  return <thead {...props}>{children}</thead>;
+function Header(props: HeaderProps) {
+  return <View as='thead' {...props} />;
 }
 
-function HeaderRow({ children, ...props }: RowProps) {
-  return <tr {...props}>{children}</tr>;
+function HeaderRow(props: RowProps) {
+  return <View as='tr' {...props} />;
 }
 
-function HeaderCell({ children, ...props }: HeaderCellProps) {
-  return <th {...props}>{children}</th>;
+function HeaderCell(props: HeaderCellProps) {
+  return <View as='th' {...props} />;
 }
 
-function Body({ children, ...props }: BodyProps) {
-  return <tbody {...props}>{children}</tbody>;
+function Body(props: BodyProps) {
+  return <View as='tbody' {...props} />;
 }
 
-function Row({ children, ...props }: RowProps) {
-  return <tr {...props}>{children}</tr>;
+function Row(props: RowProps) {
+  return <View as='tr' {...props} />;
 }
 
-function Cell({ children, ...props }: CellProps) {
-  return <td {...props}>{children}</td>;
+function Cell(props: CellProps) {
+  return <View as='td' {...props} />;
 }
 
-function Footer({ children, ...props }: FooterProps) {
-  return <tfoot {...props}>{children}</tfoot>;
+function Footer(props: FooterProps) {
+  return <View as='tfoot' {...props} />;
 }
 
-function FooterRow({ children, ...props }: RowProps) {
-  return <tr {...props}>{children}</tr>;
+function FooterRow(props: RowProps) {
+  return <View as='tr' {...props} />;
 }
 
-function FooterCell({ children, ...props }: HeaderCellProps) {
-  return <th {...props}>{children}</th>;
+function FooterCell(props: HeaderCellProps) {
+  return <View as='th' {...props} />;
 }
 
 export { Body, Cell, Footer, FooterCell, FooterRow, Header, HeaderCell, HeaderRow, Root, Row };

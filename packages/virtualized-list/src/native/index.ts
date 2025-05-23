@@ -1,2 +1,2 @@
-export { VirtualizedList } from './virtualized-list-native';
-export type { VirtualizedListProps } from './types';
+export { Root, Item, useRootContext, useItemContext } from './virtualized-list-native';
+export type { RootProps, ItemProps } from './types';

@@ -1,6 +1,7 @@
-import type { VirtualizedListProps } from './types';
+import type { RootProps, ItemProps } from './types';
+import type { ItemContextReturnType, RootContextReturnType } from '../utils/contexts';
 
-function VirtualizedList<T>(props: VirtualizedListProps<T>) {
+function Root<T>(props: RootProps<T>) {
   if (process.env.NODE_ENV === 'development') {
     console.log(
       '`VirtualizedList` from @rn-primitives/virtualized-list/web is only supported on web.'
@@ -9,4 +10,27 @@ function VirtualizedList<T>(props: VirtualizedListProps<T>) {
   return null;
 }
 
-export { VirtualizedList };
+function Item<T>(props: ItemProps<T>) {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(
+      '`VirtualizedListItem` from @rn-primitives/virtualized-list/web is only supported on web.'
+    );
+  }
+  return null;
+}
+
+const useRootContext = () => {
+  throw new Error(
+    'Cannot access the web useRootContext on a native platform. Please import from `@rn-primitives/virtualized-list` or `@rn-primitives/virtualized-list/native`'
+  );
+  return {} as RootContextReturnType;
+};
+
+const useItemContext = () => {
+  throw new Error(
+    'Cannot access the web useItemContext on a native platform. Please import from `@rn-primitives/virtualized-list` or `@rn-primitives/virtualized-list/native`'
+  );
+  return {} as ItemContextReturnType;
+};
+
+export { Root, Item, useRootContext, useItemContext };

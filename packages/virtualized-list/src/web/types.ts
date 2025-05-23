@@ -1,7 +1,11 @@
-import type { BaseVirtualizedListProps } from '../base-types';
+import type { BaseRootProps, BaseItemProps } from '../base-types';
 
-type VirtualizedListProps<T> = BaseVirtualizedListProps<T>;
+type RootProps<T> = BaseRootProps<T> & RootPropsWebOnly;
 
-type VirtualizedListPropsWebOnly = React.ComponentProps<'div'>;
+type RootPropsWebOnly = React.ComponentProps<'div'>;
 
-export type { VirtualizedListProps, VirtualizedListPropsWebOnly };
+type ItemProps<T> = BaseItemProps<T> & ItemPropsWebOnly;
+
+type ItemPropsWebOnly = React.ComponentProps<'div'>;
+
+export type { RootProps, RootPropsWebOnly, ItemProps, ItemPropsWebOnly };

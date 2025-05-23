@@ -1,4 +1,7 @@
-import type { StyleProp, ViewStyle } from 'react-native';
+import type { ViewPropsUniversal } from '@rn-primitives/core';
+
+import type { Virtualizer } from '@tanstack/react-virtual';
+import type { CSSProperties } from 'react';
 
 interface BaseVirtualizedListHandle {
   scrollToIndex(params: {
@@ -9,15 +12,14 @@ interface BaseVirtualizedListHandle {
   scrollToOffset(offset: number, animated?: boolean): void;
 }
 
-interface BaseVirtualizedListProps<T> {
-  /** Ref to the list */
-  ref: React.Ref<BaseVirtualizedListHandle>;
+type BaseRootProps<T> = ViewPropsUniversal & {
+  ref?: React.Ref<any>;
 
   /** Dataset – keep it immutable for perf */
   data: readonly T[];
 
-  /** Cell renderer – receives the logical index */
-  renderItem: (params: { item: T; index: number }) => React.ReactElement | null;
+  // /** Cell renderer – receives the logical index */
+  // renderItem: (params: { item: T; index: number }) => React.ReactElement | null;
 
   /** Average/constant item size (px).  Required for perf */
   estimatedItemSize: number;
@@ -34,9 +36,40 @@ interface BaseVirtualizedListProps<T> {
   /** Infinite scroll */
   onEndReached?: () => void;
   onEndReachedThreshold?: number; // 0-1, default 0.5
+};
 
-  /** Style to apply to the list */
-  style?: StyleProp<ViewStyle>;
+type BaseItemProps<T> = ViewPropsUniversal & {
+  ref?: React.Ref<any>;
+  item: T;
+  index: number;
+};
+
+/**
+ * Shape of the global list context for VirtualizedList
+ * Includes the data array and the TanStack Virtualizer instance.
+ * Union with null to allow createContext default.
+ */
+type BaseRootContext<T = any> = {
+  data: T[];
+  rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
+} | null;
+
+/**
+ * Shape of the per-item context for each virtual slot
+ */
+interface BaseItemContext<T = any> {
+  /** The actual item data for this slot */
+  item: T;
+  /** Index of the item in the data array */
+  index: number;
+  /** Style object for positioning (web) or layout (native) */
+  style?: CSSProperties;
 }
 
-export type { BaseVirtualizedListProps, BaseVirtualizedListHandle };
+export type {
+  BaseItemContext,
+  BaseItemProps,
+  BaseRootContext,
+  BaseRootProps,
+  BaseVirtualizedListHandle,
+};

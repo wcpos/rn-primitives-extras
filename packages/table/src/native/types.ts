@@ -9,31 +9,26 @@ import type {
   BaseRowProps,
 } from '../base-types';
 
-type RootProps = BaseRootProps &
-  ViewProps & {
-    isAnimated?: false;
-  };
-type RootPropsNativeOnly = ViewProps & {
-  isAnimated?: false;
-};
+type RootProps = BaseRootProps;
+type RootPropsNativeOnly = {};
 
-type HeaderProps = BaseHeaderProps & ViewProps & { isAnimated?: false };
-type HeaderPropsNativeOnly = ViewProps & { isAnimated?: false };
+type HeaderProps = BaseHeaderProps;
+type HeaderPropsNativeOnly = {};
 
-type HeaderCellProps = BaseHeaderCellProps & ViewProps & { isAnimated?: false };
-type HeaderCellPropsNativeOnly = ViewProps & { isAnimated?: false };
+type HeaderCellProps = BaseHeaderCellProps;
+type HeaderCellPropsNativeOnly = {};
 
-type BodyProps = BaseBodyProps & ViewProps & { isAnimated?: false };
-type BodyPropsNativeOnly = ViewProps & { isAnimated?: false };
+type BodyProps = BaseBodyProps;
+type BodyPropsNativeOnly = {};
 
-type RowProps = BaseRowProps & ViewProps & { isAnimated?: false };
-type RowPropsNativeOnly = ViewProps & { isAnimated?: false };
+type RowProps = BaseRowProps;
+type RowPropsNativeOnly = {};
 
-type CellProps = BaseCellProps & ViewProps & { isAnimated?: false };
-type CellPropsNativeOnly = ViewProps & { isAnimated?: false };
+type CellProps = BaseCellProps;
+type CellPropsNativeOnly = {};
 
-type FooterProps = BaseFooterProps & ViewProps & { isAnimated?: false };
-type FooterPropsNativeOnly = ViewProps & { isAnimated?: false };
+type FooterProps = BaseFooterProps;
+type FooterPropsNativeOnly = {};
 
 export type {
   BodyProps,

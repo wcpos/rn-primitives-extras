@@ -1,32 +1,19 @@
-import * as React from 'react';
+import type { ViewPropsUniversal } from '@rn-primitives/core';
+import { StyleProp, ViewStyle } from 'react-native';
 
-type BaseRootProps = {
-  children?: React.ReactNode;
-};
+type BaseRootProps = Omit<ViewPropsUniversal, 'style'> & { style?: StyleProp<ViewStyle> };
 
-type BaseHeaderProps = {
-  children?: React.ReactNode;
-};
+type BaseHeaderProps = Omit<ViewPropsUniversal, 'style'> & { style?: StyleProp<ViewStyle> };
 
-type BaseHeaderCellProps = {
-  children?: React.ReactNode;
-};
+type BaseHeaderCellProps = Omit<ViewPropsUniversal, 'style'> & { style?: StyleProp<ViewStyle> };
 
-type BaseBodyProps = {
-  children?: React.ReactNode;
-};
+type BaseBodyProps = Omit<ViewPropsUniversal, 'style'> & { style?: StyleProp<ViewStyle> };
 
-type BaseRowProps = {
-  children?: React.ReactNode;
-};
+type BaseRowProps = Omit<ViewPropsUniversal, 'style'> & { style?: StyleProp<ViewStyle> };
 
-type BaseCellProps = {
-  children?: React.ReactNode;
-};
+type BaseCellProps = Omit<ViewPropsUniversal, 'style'> & { style?: StyleProp<ViewStyle> };
 
-type BaseFooterProps = {
-  children?: React.ReactNode;
-};
+type BaseFooterProps = Omit<ViewPropsUniversal, 'style'> & { style?: StyleProp<ViewStyle> };
 
 export type {
   BaseRootProps,

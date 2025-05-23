@@ -1,10 +1,13 @@
 import { Stack } from 'expo-router';
 import * as React from 'react';
 import { View } from 'react-native';
-import { VirtualizedList } from '~/components/ui/virtualized-list';
+import {
+  VirtualizedList,
+  VirtualizedListItem,
+  useItemContext,
+} from '~/components/ui/virtualized-list';
 import { Text } from '~/components/ui/text';
 import { Button } from '~/components/ui/button';
-import type { VirtualizedListHandle } from '~/components/ui/virtualized-list';
 
 interface Row {
   title: string;
@@ -15,7 +18,7 @@ const DATA: Row[] = Array.from({ length: 5000 }, (_, i) => ({
 }));
 
 export default function VirtualizedListScreen() {
-  const listRef = React.useRef<VirtualizedListHandle>(null);
+  const listRef = React.useRef<any>(null);
 
   return (
     <>
@@ -33,16 +36,18 @@ export default function VirtualizedListScreen() {
           </Button>
         </View>
         <View className='flex-1'>
-          <VirtualizedList
-            ref={listRef}
-            data={DATA}
-            renderItem={({ item }) => {
-              return <Text>{item.title}</Text>;
-            }}
-            estimatedItemSize={24}
-          />
+          <VirtualizedList ref={listRef} data={DATA} estimatedItemSize={24}>
+            <VirtualizedListItem>
+              <Item />
+            </VirtualizedListItem>
+          </VirtualizedList>
         </View>
       </View>
     </>
   );
+}
+
+function Item() {
+  const { item } = useItemContext();
+  return <Text>{item.title}</Text>;
 }
