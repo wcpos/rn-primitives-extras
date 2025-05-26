@@ -3,6 +3,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import {
   VirtualizedList,
+  VirtualizedListList,
   VirtualizedListItem,
   useItemContext,
 } from '~/components/ui/virtualized-list';
@@ -36,10 +37,12 @@ export default function VirtualizedListScreen() {
           </Button>
         </View>
         <View className='flex-1'>
-          <VirtualizedList ref={listRef} data={DATA} estimatedItemSize={24}>
-            <VirtualizedListItem>
-              <Item />
-            </VirtualizedListItem>
+          <VirtualizedList>
+            <VirtualizedListList ref={listRef} data={DATA} estimatedItemSize={24}>
+              <VirtualizedListItem>
+                <Item />
+              </VirtualizedListItem>
+            </VirtualizedListList>
           </VirtualizedList>
         </View>
       </View>

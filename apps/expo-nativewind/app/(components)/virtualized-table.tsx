@@ -1,10 +1,14 @@
 import { Stack } from 'expo-router';
 import * as React from 'react';
 import { View } from 'react-native';
-import { VirtualizedList } from '~/components/ui/virtualized-list';
+import {
+  VirtualizedList,
+  useItemContext,
+  VirtualizedListItem,
+  VirtualizedListList,
+} from '~/components/ui/virtualized-list';
 import { Text } from '~/components/ui/text';
 import { Button } from '~/components/ui/button';
-import type { VirtualizedListHandle } from '~/components/ui/virtualized-list';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import {
   Table,
@@ -33,8 +37,6 @@ const DATA: Row[] = [
 ];
 
 export default function VirtualizedListScreen() {
-  const listRef = React.useRef<VirtualizedListHandle>(null);
-
   const table = useReactTable<Row>({
     columns: [
       {
@@ -74,24 +76,28 @@ export default function VirtualizedListScreen() {
               </TableHeaderRow>
             ))}
           </TableHeader>
-          <TableBody className='flex-1'>
-            <VirtualizedList
-              ref={listRef}
-              data={table.getRowModel().rows}
-              renderItem={(row) => {
-                return (
+          <VirtualizedList asChild>
+            <TableBody>
+              <VirtualizedListList data={table.getRowModel().rows} estimatedItemSize={24}>
+                <VirtualizedListItem asChild>
                   <TableRow>
-                    <TableCell>
-                      <Text>{JSON.stringify(row)}</Text>
-                    </TableCell>
+                    <Row />
                   </TableRow>
-                );
-              }}
-              estimatedItemSize={24}
-            />
-          </TableBody>
+                </VirtualizedListItem>
+              </VirtualizedListList>
+            </TableBody>
+          </VirtualizedList>
         </Table>
       </View>
     </>
+  );
+}
+
+function Row() {
+  const { item } = useItemContext();
+  return (
+    <View>
+      <Text>{JSON.stringify(item)}</Text>
+    </View>
   );
 }

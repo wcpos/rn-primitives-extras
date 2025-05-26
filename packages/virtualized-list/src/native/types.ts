@@ -1,21 +1,23 @@
 import type { FlashListProps } from '@shopify/flash-list';
-import type { BaseRootProps, BaseItemProps } from '../base-types';
+import type { BaseItemProps, BaseListProps, BaseRootProps } from '../base-types';
 
-type RootProps<T> = BaseRootProps<T> & BasePropsNativeOnly<T>;
-type BasePropsNativeOnly<T> = Omit<
+type RootProps = BaseRootProps;
+type RootPropsNativeOnly = {};
+
+type ListProps<T> = BaseListProps<T> & ListPropsNativeOnly<T>;
+type ListPropsNativeOnly<T> = Omit<
   FlashListProps<T>,
-  | 'ref'
-  | 'data'
-  | 'renderItem'
-  | 'estimatedItemSize'
-  | 'horizontal'
-  | 'overscan'
-  | 'keyExtractor'
-  | 'onEndReached'
-  | 'onEndReachedThreshold'
+  'ref' | 'data' | 'estimatedItemSize' | 'horizontal' | 'overscan' | 'keyExtractor' | 'renderItem'
 >;
 
 type ItemProps<T> = BaseItemProps<T>;
-type RootPropsNativeOnly<T> = {};
+type ItemPropsNativeOnly = {};
 
-export type { RootProps, BasePropsNativeOnly, ItemProps, RootPropsNativeOnly };
+export type {
+  ItemProps,
+  ItemPropsNativeOnly,
+  ListProps,
+  ListPropsNativeOnly,
+  RootProps,
+  RootPropsNativeOnly,
+};

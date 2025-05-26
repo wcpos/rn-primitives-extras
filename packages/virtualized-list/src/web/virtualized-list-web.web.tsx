@@ -3,13 +3,26 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import type { BaseRootContext, BaseItemContext } from '../base-types';
 import { RootContext, ItemContext, useRootContext, useItemContext } from '../utils/contexts';
 import { View } from '@rn-primitives/core/dist/web';
-import type { RootProps, ItemProps } from './types';
+import type { RootProps, ItemProps, ListProps } from './types';
 
-/**
- * Root primitive: sets up virtualization and provides contexts
- * Accepts `ref` as a prop (React 19 style)
- */
-function Root<T>({
+function Root(props: RootProps) {
+  const parentRef = React.useRef<HTMLDivElement>(null);
+  const [scrollElement, setScrollElement] = React.useState<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    if (parentRef.current) {
+      setScrollElement(parentRef.current);
+    }
+  }, []);
+
+  return (
+    <RootContext.Provider value={{ ref: parentRef, scrollElement }}>
+      <View {...props} ref={parentRef} style={{ overflow: 'auto', height: '100%' }} />
+    </RootContext.Provider>
+  );
+}
+
+function List<T>({
   ref,
   data,
   estimatedItemSize,
@@ -18,15 +31,20 @@ function Root<T>({
   keyExtractor,
   children,
   ...rest
-}: RootProps<T>) {
-  const parentRef = React.useRef<HTMLDivElement>(null);
+}: ListProps<T>) {
+  const context = useRootContext();
+  if (!context) {
+    throw new Error('VirtualizedList must be used within a VirtualizedList.Root');
+  }
+  const { scrollElement } = context;
 
   const rowVirtualizer = useVirtualizer({
     count: data.length,
-    getScrollElement: () => parentRef.current,
+    getScrollElement: () => scrollElement,
     horizontal,
     overscan,
     estimateSize: () => estimatedItemSize,
+    ...rest,
   });
 
   React.useImperativeHandle(ref, () => ({
@@ -44,49 +62,41 @@ function Root<T>({
   }));
 
   return (
-    <RootContext.Provider value={{ data, rowVirtualizer } as BaseRootContext<T>}>
-      <View ref={parentRef} style={{ overflow: 'auto', height: '100%' }}>
-        <View
-          style={{
-            position: 'relative',
-            height: horizontal ? '100%' : `${rowVirtualizer.getTotalSize()}px`,
-            width: horizontal ? `${rowVirtualizer.getTotalSize()}px` : '100%',
-          }}
-        >
-          {rowVirtualizer.getVirtualItems().map((vItem) => {
-            const item = data[vItem.index];
-            const style: React.CSSProperties = {
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: `${vItem.size}px`,
-              transform: horizontal ? undefined : `translateY(${vItem.start}px)`,
-            };
-            const key = keyExtractor ? keyExtractor(item, vItem.index) : vItem.key;
+    <View
+      style={{
+        position: 'relative',
+        height: horizontal ? '100%' : `${rowVirtualizer.getTotalSize()}px`,
+        width: horizontal ? `${rowVirtualizer.getTotalSize()}px` : '100%',
+      }}
+    >
+      {rowVirtualizer.getVirtualItems().map((vItem) => {
+        const item = data[vItem.index];
+        const style = {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: `${vItem.size}px`,
+          transform: horizontal ? undefined : `translateY(${vItem.start}px)`,
+        };
+        const key = keyExtractor ? keyExtractor(item, vItem.index) : vItem.key;
 
-            return (
-              <ItemContext.Provider
-                key={key}
-                value={{ item, index: vItem.index, style } as BaseItemContext<T>}
-              >
-                {children}
-              </ItemContext.Provider>
-            );
-          })}
-        </View>
-      </View>
-    </RootContext.Provider>
+        return (
+          <ItemContext.Provider
+            key={key}
+            value={{ item, index: vItem.index, style } as BaseItemContext<T>}
+          >
+            {children}
+          </ItemContext.Provider>
+        );
+      })}
+    </View>
   );
 }
 
-/**
- * Item primitive: consumes per-item context and renders children
- */
 function Item<T>(props: ItemProps<T>) {
   const { style } = useItemContext();
   return <View style={style as any} {...props} />;
 }
 
-// Re-export hooks and types
-export { useRootContext, useItemContext, Item, Root };
+export { useItemContext, useRootContext, Item, List, Root };

@@ -1,7 +1,16 @@
-import type { RootProps, ItemProps } from './types';
+import type { RootProps, ListProps, ItemProps } from './types';
 import type { RootContextReturnType, ItemContextReturnType } from '../utils/contexts';
 
-function Root<T>(props: RootProps<T>) {
+function Root(props: RootProps) {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(
+      '`VirtualizedList` from @rn-primitives/virtualized-list/native is only supported on native.'
+    );
+  }
+  return null as React.ReactNode;
+}
+
+function List<T>(props: ListProps<T>) {
   if (process.env.NODE_ENV === 'development') {
     console.log(
       '`VirtualizedList` from @rn-primitives/virtualized-list/native is only supported on native.'
@@ -33,4 +42,4 @@ const useItemContext = () => {
   return {} as ItemContextReturnType;
 };
 
-export { Root, Item, useRootContext, useItemContext };
+export { Root, List, Item, useRootContext, useItemContext };

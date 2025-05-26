@@ -1,16 +1,33 @@
 import { View } from '@rn-primitives/core';
-import { Root as RootWeb, Item as ItemWeb, useRootContext, useItemContext } from '../web';
-import type { VirtualizedListHandle, RootProps, ItemProps } from './types';
+import {
+  Item as ItemWeb,
+  List as ListWeb,
+  Root as RootWeb,
+  useItemContext,
+  useRootContext,
+} from '../web';
+import type { ItemProps, ListProps, RootProps } from './types';
 
-function Root<T>({ ref, native: _native, style, web, ...props }: RootProps<T>) {
+function Root({ native: _native, style, web, ...props }: RootProps) {
   if (style) {
     return (
       <View style={style} asChild>
-        <RootWeb ref={ref as any} {...props} {...web} />
+        <RootWeb {...props} {...web} />
       </View>
     );
   }
-  return <RootWeb ref={ref as any} {...props} {...web} />;
+  return <RootWeb {...props} {...web} />;
+}
+
+function List<T>({ native: _native, style, web, ...props }: ListProps<T>) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <ListWeb {...props} {...web} />
+      </View>
+    );
+  }
+  return <ListWeb {...props} {...web} />;
 }
 
 function Item<T>({ ref, native: _native, style, web, ...props }: ItemProps<T>) {
@@ -24,4 +41,4 @@ function Item<T>({ ref, native: _native, style, web, ...props }: ItemProps<T>) {
   return <ItemWeb ref={ref as any} {...props} {...web} />;
 }
 
-export { Root, Item, useRootContext, useItemContext };
+export { Item, List, Root, useItemContext, useRootContext };

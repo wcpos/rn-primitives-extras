@@ -1,11 +1,25 @@
-import type { BaseRootProps, BaseItemProps } from '../base-types';
+import type { VirtualizerOptions } from '@tanstack/react-virtual';
+import type { BaseItemProps, BaseListProps, BaseRootProps } from '../base-types';
 
-type RootProps<T> = BaseRootProps<T> & RootPropsWebOnly;
-
+type RootProps = BaseRootProps & RootPropsWebOnly;
 type RootPropsWebOnly = React.ComponentProps<'div'>;
 
-type ItemProps<T> = BaseItemProps<T> & ItemPropsWebOnly;
+type ListProps<T> = BaseListProps<T> & ListPropsWebOnly;
+type ListPropsWebOnly = Partial<
+  Omit<
+    VirtualizerOptions<HTMLDivElement, HTMLDivElement>,
+    'count' | 'getScrollElement' | 'estimateSize'
+  >
+>;
 
+type ItemProps<T> = BaseItemProps<T> & ItemPropsWebOnly;
 type ItemPropsWebOnly = React.ComponentProps<'div'>;
 
-export type { RootProps, RootPropsWebOnly, ItemProps, ItemPropsWebOnly };
+export type {
+  ItemProps,
+  ItemPropsWebOnly,
+  RootProps,
+  RootPropsWebOnly,
+  ListProps,
+  ListPropsWebOnly,
+};

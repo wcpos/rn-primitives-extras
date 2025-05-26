@@ -1,19 +1,28 @@
+import { View } from '@rn-primitives/core/dist/native';
 import { FlashList } from '@shopify/flash-list';
 import * as React from 'react';
-import type { BaseItemContext, BaseRootContext } from '../base-types';
+import type { BaseItemContext } from '../base-types';
 import { ItemContext, RootContext, useItemContext, useRootContext } from '../utils/contexts';
-import type { ItemProps, RootProps } from './types';
-import { View } from '@rn-primitives/core/dist/native';
+import type { ItemProps, ListProps, RootProps } from './types';
 
-function Root<T>({
+function Root(props: RootProps) {
+  return (
+    <RootContext.Provider value={null}>
+      <View {...props} style={{ flex: 1 }} />
+    </RootContext.Provider>
+  );
+}
+
+function List<T>({
   ref,
   overscan = 4,
   keyExtractor,
   children,
   data,
   estimatedItemSize,
+  // renderItem, // allow override for custom item rendering?
   ...rest
-}: RootProps<T>) {
+}: ListProps<T>) {
   const flashRef = React.useRef<FlashList<T>>(null);
 
   React.useImperativeHandle(ref, () => ({
@@ -36,37 +45,37 @@ function Root<T>({
   }));
 
   return (
-    // <View>
-    <RootContext.Provider value={{} as BaseRootContext<T>}>
-      <FlashList
-        ref={flashRef}
-        data={data}
-        keyExtractor={keyExtractor}
-        drawDistance={overscan * estimatedItemSize} // px
-        estimatedItemSize={estimatedItemSize}
-        renderItem={({ item, index }) => {
-          debugger;
-          const key = keyExtractor ? keyExtractor(item, index) : String(index);
-          return (
-            <ItemContext.Provider value={{ item, index } as BaseItemContext<T>} key={key}>
-              {children}
-            </ItemContext.Provider>
-          );
-        }}
-        // {...rest}
-      />
-    </RootContext.Provider>
-    // </View>
+    <FlashList
+      ref={flashRef}
+      data={data}
+      keyExtractor={keyExtractor}
+      drawDistance={overscan * estimatedItemSize} // px
+      estimatedItemSize={estimatedItemSize}
+      renderItem={({ item, index }) => {
+        const key = keyExtractor ? keyExtractor(item, index) : String(index);
+        return (
+          <ItemContext.Provider value={{ item, index } as BaseItemContext<T>} key={key}>
+            {children}
+          </ItemContext.Provider>
+        );
+      }}
+      {...rest}
+    />
   );
 }
 
 /**
  * Native Item primitive: consumes per-item context and renders children
  */
-function Item<T>({ children }: ItemProps<T>) {
+function Item<T>({ asChild, children }: ItemProps<T>) {
   // style isn't used on native; item & index can be used by descendants
   const { item, index } = useItemContext();
+
+  if (asChild) {
+    return <View>{children}</View>;
+  }
+
   return <>{children}</>;
 }
 
-export { Item, Root, useRootContext, useItemContext };
+export { Item, List, Root, useItemContext, useRootContext };

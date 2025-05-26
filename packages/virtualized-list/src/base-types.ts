@@ -1,7 +1,8 @@
 import type { ViewPropsUniversal } from '@rn-primitives/core';
 
-import type { Virtualizer } from '@tanstack/react-virtual';
-import type { CSSProperties } from 'react';
+import { StyleProp, ViewProps } from 'react-native';
+
+type BaseRootProps = ViewPropsUniversal;
 
 interface BaseVirtualizedListHandle {
   scrollToIndex(params: {
@@ -12,8 +13,10 @@ interface BaseVirtualizedListHandle {
   scrollToOffset(offset: number, animated?: boolean): void;
 }
 
-type BaseRootProps<T> = ViewPropsUniversal & {
+type BaseListProps<T> = {
   ref?: React.Ref<any>;
+
+  children: React.ReactNode;
 
   /** Dataset – keep it immutable for perf */
   data: readonly T[];
@@ -36,6 +39,9 @@ type BaseRootProps<T> = ViewPropsUniversal & {
   /** Infinite scroll */
   onEndReached?: () => void;
   onEndReachedThreshold?: number; // 0-1, default 0.5
+
+  /** Style object for positioning (web) or layout (native) */
+  style?: StyleProp<ViewProps>;
 };
 
 type BaseItemProps<T> = ViewPropsUniversal & {
@@ -49,9 +55,9 @@ type BaseItemProps<T> = ViewPropsUniversal & {
  * Includes the data array and the TanStack Virtualizer instance.
  * Union with null to allow createContext default.
  */
-type BaseRootContext<T = any> = {
-  data: T[];
-  rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
+type BaseRootContext = {
+  ref: React.RefObject<HTMLDivElement | null>;
+  scrollElement: HTMLDivElement | null;
 } | null;
 
 /**
@@ -63,13 +69,14 @@ interface BaseItemContext<T = any> {
   /** Index of the item in the data array */
   index: number;
   /** Style object for positioning (web) or layout (native) */
-  style?: CSSProperties;
+  style?: StyleProp<ViewProps>;
 }
 
 export type {
   BaseItemContext,
   BaseItemProps,
   BaseRootContext,
+  BaseListProps,
   BaseRootProps,
   BaseVirtualizedListHandle,
 };
