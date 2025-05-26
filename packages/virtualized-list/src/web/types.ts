@@ -1,5 +1,5 @@
-import type { VirtualizerOptions } from '@tanstack/react-virtual';
-import type { BaseItemProps, BaseListProps, BaseRootProps } from '../base-types';
+import type { Virtualizer, VirtualizerOptions } from '@tanstack/react-virtual';
+import type { BaseItemProps, BaseListProps, BaseRootProps, BaseItemContext } from '../base-types';
 
 type RootProps = BaseRootProps & RootPropsWebOnly;
 type RootPropsWebOnly = React.ComponentProps<'div'>;
@@ -15,6 +15,11 @@ type ListPropsWebOnly = Partial<
 type ItemProps<T> = BaseItemProps<T> & ItemPropsWebOnly;
 type ItemPropsWebOnly = React.ComponentProps<'div'>;
 
+type ItemContextType<T> = BaseItemContext<T> & ItemContextWebOnly;
+type ItemContextWebOnly = {
+  rowVirtualizer: Virtualizer<HTMLDivElement, HTMLDivElement>;
+};
+
 export type {
   ItemProps,
   ItemPropsWebOnly,
@@ -22,4 +27,5 @@ export type {
   RootPropsWebOnly,
   ListProps,
   ListPropsWebOnly,
+  ItemContextType,
 };

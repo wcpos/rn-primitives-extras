@@ -21,6 +21,7 @@ function List<T>({
   data,
   estimatedItemSize,
   // renderItem, // allow override for custom item rendering?
+  asChild,
   ...rest
 }: ListProps<T>) {
   const flashRef = React.useRef<FlashList<T>>(null);
@@ -44,7 +45,7 @@ function List<T>({
       flashRef.current?.scrollToOffset({ offset, animated }),
   }));
 
-  return (
+  const flashList = (
     <FlashList
       ref={flashRef}
       data={data}
@@ -62,11 +63,15 @@ function List<T>({
       {...rest}
     />
   );
+
+  if (asChild) {
+    const child = React.Children.only(children) as React.ReactElement;
+    return React.cloneElement(child, undefined, flashList);
+  }
+
+  return flashList;
 }
 
-/**
- * Native Item primitive: consumes per-item context and renders children
- */
 function Item<T>({ asChild, children }: ItemProps<T>) {
   // style isn't used on native; item & index can be used by descendants
   const { item, index } = useItemContext();

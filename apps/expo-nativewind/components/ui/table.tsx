@@ -15,7 +15,7 @@ const TableHeaderRow = ({ className, ...props }: TablePrimitive.RowProps) => (
   <TextClassContext.Provider value='text-muted-foreground'>
     <TablePrimitive.HeaderRow
       className={cn(
-        'h-12 text-left justify-center font-medium [&:has([role=checkbox])]:pr-0',
+        'text-left justify-center font-medium [&:has([role=checkbox])]:pr-0',
         className
       )}
       {...props}
@@ -33,7 +33,7 @@ const TableHeaderCell = ({ className, ...props }: TablePrimitive.HeaderCellProps
 const TableBody = ({ className, ...props }: TablePrimitive.BodyProps) => (
   <TablePrimitive.Body
     className={cn('flex-1 border-border [&_tr:last-child]:border-0', className)}
-    // style={[{ minHeight: 2 }, style]}
+    // style={[{ minHeight: 2 }]}
     {...props}
   />
 );

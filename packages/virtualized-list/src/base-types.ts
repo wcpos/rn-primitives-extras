@@ -42,6 +42,8 @@ type BaseListProps<T> = {
 
   /** Style object for positioning (web) or layout (native) */
   style?: StyleProp<ViewProps>;
+
+  asChild?: boolean;
 };
 
 type BaseItemProps<T> = ViewPropsUniversal & {

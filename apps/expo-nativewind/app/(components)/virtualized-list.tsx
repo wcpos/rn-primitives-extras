@@ -2,9 +2,9 @@ import { Stack } from 'expo-router';
 import * as React from 'react';
 import { View } from 'react-native';
 import {
+  Virtualized,
   VirtualizedList,
-  VirtualizedListList,
-  VirtualizedListItem,
+  VirtualizedItem,
   useItemContext,
 } from '~/components/ui/virtualized-list';
 import { Text } from '~/components/ui/text';
@@ -37,13 +37,13 @@ export default function VirtualizedListScreen() {
           </Button>
         </View>
         <View className='flex-1'>
-          <VirtualizedList>
-            <VirtualizedListList ref={listRef} data={DATA} estimatedItemSize={24}>
-              <VirtualizedListItem>
+          <Virtualized>
+            <VirtualizedList ref={listRef} data={DATA} estimatedItemSize={24}>
+              <VirtualizedItem>
                 <Item />
-              </VirtualizedListItem>
-            </VirtualizedListList>
-          </VirtualizedList>
+              </VirtualizedItem>
+            </VirtualizedList>
+          </Virtualized>
         </View>
       </View>
     </>
