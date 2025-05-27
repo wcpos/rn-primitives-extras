@@ -41,6 +41,11 @@ function List<T>({
     horizontal,
     overscan,
     estimateSize: () => estimatedItemSize,
+    // measure dynamic row height, except in firefox because it measures table border height incorrectly
+    measureElement:
+      typeof window !== 'undefined' && navigator.userAgent.indexOf('Firefox') === -1
+        ? (element) => element?.getBoundingClientRect().height
+        : undefined,
     ...rest,
   });
 

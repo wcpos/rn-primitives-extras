@@ -19,44 +19,115 @@ import type {
   RootProps,
   RowProps,
 } from './types';
+import { View } from '@rn-primitives/core';
 
-function Root({ native: _native, web, ...props }: RootProps) {
+function Root({ style, native: _native, web, ...props }: RootProps) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <RootWeb {...props} {...(web as any)} />
+      </View>
+    );
+  }
   return <RootWeb {...props} {...(web as any)} />;
 }
 
-function Header({ native: _native, web, ...props }: HeaderProps) {
+function Header({ style, native: _native, web, ...props }: HeaderProps) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <HeaderWeb {...props} {...(web as any)} />
+      </View>
+    );
+  }
   return <HeaderWeb {...props} {...(web as any)} />;
 }
 
-function HeaderRow({ native: _native, web, ...props }: RowProps) {
+function HeaderRow({ style, native: _native, web, ...props }: RowProps) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <HeaderRowWeb {...props} {...(web as any)} />
+      </View>
+    );
+  }
   return <HeaderRowWeb {...props} {...(web as any)} />;
 }
 
-function HeaderCell({ native: _native, web, ...props }: HeaderCellProps) {
+function HeaderCell({ style, native: _native, web, ...props }: HeaderCellProps) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <HeaderCellWeb {...props} {...(web as any)} />
+      </View>
+    );
+  }
   return <HeaderCellWeb {...props} {...(web as any)} />;
 }
 
-function Body({ native: _native, web, ...props }: BodyProps) {
+function Body({ style, native: _native, web, ...props }: BodyProps) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <BodyWeb {...props} {...(web as any)} />
+      </View>
+    );
+  }
   return <BodyWeb {...props} {...(web as any)} />;
 }
 
-function Row({ native: _native, web, ...props }: RowProps) {
+function Row({ style, native: _native, web, ...props }: RowProps) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <RowWeb {...props} {...(web as any)} />
+      </View>
+    );
+  }
   return <RowWeb {...props} {...(web as any)} />;
 }
 
-function Cell({ native: _native, web, ...props }: CellProps) {
+function Cell({ style, native: _native, web, ...props }: CellProps) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <CellWeb {...props} {...(web as any)} />
+      </View>
+    );
+  }
   return <CellWeb {...props} {...(web as any)} />;
 }
 
-function Footer({ native: _native, web, ...props }: FooterProps) {
+function Footer({ style, native: _native, web, ...props }: FooterProps) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <FooterWeb {...props} {...(web as any)} />
+      </View>
+    );
+  }
   return <FooterWeb {...props} {...(web as any)} />;
 }
 
-function FooterRow({ native: _native, web, ...props }: RowProps) {
+function FooterRow({ style, native: _native, web, ...props }: RowProps) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <FooterRowWeb {...props} {...(web as any)} />
+      </View>
+    );
+  }
   return <FooterRowWeb {...props} {...(web as any)} />;
 }
 
-function FooterCell({ native: _native, web, ...props }: HeaderCellProps) {
+function FooterCell({ style, native: _native, web, ...props }: HeaderCellProps) {
+  if (style) {
+    return (
+      <View style={style} asChild>
+        <FooterCellWeb {...props} {...(web as any)} />
+      </View>
+    );
+  }
   return <FooterCellWeb {...props} {...(web as any)} />;
 }
 

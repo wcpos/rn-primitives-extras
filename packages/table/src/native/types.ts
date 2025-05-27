@@ -1,4 +1,5 @@
 import type { ViewProps } from '@rn-primitives/core/dist/native';
+import { Prettify } from '@rn-primitives/types';
 import type {
   BaseBodyProps,
   BaseCellProps,
@@ -9,26 +10,26 @@ import type {
   BaseRowProps,
 } from '../base-types';
 
-type RootProps = BaseRootProps;
-type RootPropsNativeOnly = {};
+type RootProps = Prettify<BaseRootProps & ViewProps>;
+type RootPropsNativeOnly = ViewProps;
 
-type HeaderProps = BaseHeaderProps;
-type HeaderPropsNativeOnly = {};
+type HeaderProps = Prettify<BaseHeaderProps & ViewProps>;
+type HeaderPropsNativeOnly = ViewProps;
 
-type HeaderCellProps = BaseHeaderCellProps;
-type HeaderCellPropsNativeOnly = {};
+type HeaderCellProps = Prettify<BaseHeaderCellProps & ViewProps>;
+type HeaderCellPropsNativeOnly = ViewProps;
 
-type BodyProps = BaseBodyProps;
-type BodyPropsNativeOnly = {};
+type BodyProps = Prettify<BaseBodyProps & ViewProps>;
+type BodyPropsNativeOnly = ViewProps;
 
-type RowProps = BaseRowProps;
-type RowPropsNativeOnly = {};
+type RowProps = Prettify<BaseRowProps & ViewProps>;
+type RowPropsNativeOnly = ViewProps;
 
-type CellProps = BaseCellProps;
-type CellPropsNativeOnly = {};
+type CellProps = Prettify<BaseCellProps & ViewProps>;
+type CellPropsNativeOnly = ViewProps;
 
-type FooterProps = BaseFooterProps;
-type FooterPropsNativeOnly = {};
+type FooterProps = Prettify<BaseFooterProps & ViewProps>;
+type FooterPropsNativeOnly = ViewProps;
 
 export type {
   BodyProps,

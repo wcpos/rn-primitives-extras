@@ -19,6 +19,11 @@ import {
   TableHeaderRow,
   TableRow,
 } from '~/components/ui/table';
+import {
+  VirtualizedTable,
+  VirtualizedTableHeader,
+  VirtualizedTableBody,
+} from '~/components/ui/virtualized-table';
 import { cn } from '~/lib/utils';
 
 interface Row {
@@ -70,35 +75,32 @@ export default function VirtualizedListScreen() {
     <>
       <Stack.Screen options={{ headerShadowVisible: false }} />
       <View className='h-full'>
-        <Virtualized className={cn(Platform.OS === 'web' && 'relative')}>
-          <Table className={cn(Platform.OS === 'web' && 'grid')}>
-            <TableHeader className={cn(Platform.OS === 'web' && 'grid sticky top-0 z-1')}>
+        <Virtualized
+          // relative is required for tanstack table to work on web
+          className={Platform.OS === 'web' ? 'relative' : undefined}
+        >
+          <VirtualizedTable>
+            <VirtualizedTableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableHeaderRow
-                  key={headerGroup.id}
-                  className={cn(Platform.OS === 'web' && 'flex flex-row w-full')}
-                >
+                <TableHeaderRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <TableHeaderCell
-                      key={header.id}
-                      className={cn(Platform.OS === 'web' && 'flex basis-1/4')}
-                    >
+                    <TableHeaderCell key={header.id}>
                       <Text>{String(header.column.columnDef.header)}</Text>
                     </TableHeaderCell>
                   ))}
                 </TableHeaderRow>
               ))}
-            </TableHeader>
-            <VirtualizedList data={table.getRowModel().rows} estimatedItemSize={24} asChild>
-              <TableBody className={cn('flex-none h-full w-full', Platform.OS === 'web' && 'grid')}>
+            </VirtualizedTableHeader>
+            <VirtualizedList data={table.getRowModel().rows} estimatedItemSize={30} asChild>
+              <VirtualizedTableBody>
                 <VirtualizedItem asChild>
-                  <TableRow className={cn(Platform.OS === 'web' && 'flex flex-row w-full')}>
+                  <TableRow>
                     <Row />
                   </TableRow>
                 </VirtualizedItem>
-              </TableBody>
+              </VirtualizedTableBody>
             </VirtualizedList>
-          </Table>
+          </VirtualizedTable>
         </Virtualized>
       </View>
     </>

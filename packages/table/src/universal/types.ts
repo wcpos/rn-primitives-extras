@@ -26,40 +26,46 @@ import type {
   BaseRootProps,
   BaseRowProps,
 } from '../base-types';
+import type { ViewPropsUniversal } from '@rn-primitives/core';
 
 type RootProps = Prettify<
-  BaseRootProps & {
-    native?: RootPropsNativeOnly;
-    web?: RootPropsWebOnly;
-  }
+  BaseRootProps &
+    ViewPropsUniversal & {
+      native?: RootPropsNativeOnly;
+      web?: RootPropsWebOnly;
+    }
 >;
 
 type HeaderProps = Prettify<
-  BaseHeaderProps & {
-    native?: HeaderPropsNativeOnly;
-    web?: HeaderPropsWebOnly;
-  }
+  BaseHeaderProps &
+    ViewPropsUniversal & {
+      native?: HeaderPropsNativeOnly;
+      web?: HeaderPropsWebOnly;
+    }
 >;
 
 type HeaderCellProps = Prettify<
-  BaseHeaderCellProps & {
-    native?: HeaderCellPropsNativeOnly;
-    web?: HeaderCellPropsWebOnly;
-  }
+  BaseHeaderCellProps &
+    ViewPropsUniversal & {
+      native?: HeaderCellPropsNativeOnly;
+      web?: HeaderCellPropsWebOnly;
+    }
 >;
 
 type BodyProps = Prettify<
-  BaseBodyProps & {
-    native?: BodyPropsNativeOnly;
-    web?: BodyPropsWebOnly;
-  }
+  BaseBodyProps &
+    ViewPropsUniversal & {
+      native?: BodyPropsNativeOnly;
+      web?: BodyPropsWebOnly;
+    }
 >;
 
 type RowProps = Prettify<
-  BaseRowProps & {
-    native?: RowPropsNativeOnly;
-    web?: RowPropsWebOnly;
-  }
+  BaseRowProps &
+    ViewPropsUniversal & {
+      native?: RowPropsNativeOnly;
+      web?: RowPropsWebOnly;
+    }
 >;
 
 type CellProps = Prettify<
@@ -67,13 +73,15 @@ type CellProps = Prettify<
     native?: CellPropsNativeOnly;
     web?: CellPropsWebOnly;
   }
->;
+> &
+  ViewPropsUniversal;
 
 type FooterProps = Prettify<
-  BaseFooterProps & {
-    native?: FooterPropsNativeOnly;
-    web?: FooterPropsWebOnly;
-  }
+  BaseFooterProps &
+    ViewPropsUniversal & {
+      native?: FooterPropsNativeOnly;
+      web?: FooterPropsWebOnly;
+    }
 >;
 
 export type {
