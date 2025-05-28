@@ -4,6 +4,7 @@ import * as React from 'react';
 import type { BaseItemContext } from '../base-types';
 import { ItemContext, RootContext, useItemContext, useRootContext } from '../utils/contexts';
 import type { ItemProps, ListProps, RootProps } from './types';
+import { SlottableWithNestedChildren } from '../utils/slottable-with-nested-children';
 
 function Root(props: RootProps) {
   return (
@@ -64,12 +65,11 @@ function List<T>({
     />
   );
 
-  if (asChild) {
-    const child = React.Children.only(children) as React.ReactElement;
-    return React.cloneElement(child, undefined, flashList);
-  }
-
-  return flashList;
+  return (
+    <SlottableWithNestedChildren asChild={asChild} slotRenderer={() => flashList}>
+      {children}
+    </SlottableWithNestedChildren>
+  );
 }
 
 function Item<T>({ asChild, children }: ItemProps<T>) {

@@ -63,4 +63,4 @@ function toOptions(name: string) {
   return title;
 }
 
-const COMPONENTS = ['table', 'virtualized-list', 'virtualized-table'] as const;
+const COMPONENTS = ['table', 'virtualized-list', 'virtualized-table', 'combobox'] as const;

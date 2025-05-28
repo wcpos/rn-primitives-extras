@@ -4,6 +4,7 @@ import * as React from 'react';
 import type { BaseItemContext } from '../base-types';
 import { ItemContext, RootContext, useItemContext, useRootContext } from '../utils/contexts';
 import type { ItemContextType, ItemProps, ListProps, RootProps } from './types';
+import { SlottableWithNestedChildren } from '../utils/slottable-with-nested-children';
 
 function Root(props: RootProps) {
   const parentRef = React.useRef<HTMLDivElement>(null);
@@ -89,14 +90,14 @@ function List<T>({
   };
 
   if (asChild) {
-    const wrapper = React.Children.only(children) as React.ReactElement<{
-      children?: React.ReactNode;
-    }>;
-    const innerContent = wrapper.props.children;
-    return React.cloneElement(
-      wrapper,
-      { style: containerStyle } as any,
-      renderVirtualizedContent(innerContent)
+    return (
+      <SlottableWithNestedChildren
+        asChild={asChild}
+        injectedProps={{ style: containerStyle }}
+        slotRenderer={renderVirtualizedContent}
+      >
+        {children}
+      </SlottableWithNestedChildren>
     );
   }
 
