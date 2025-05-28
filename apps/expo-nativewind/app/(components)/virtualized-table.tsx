@@ -9,7 +9,7 @@ import {
 } from '~/components/ui/virtualized-list';
 import { Text } from '~/components/ui/text';
 import { Button } from '~/components/ui/button';
-import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { Cell, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import {
   Table,
   TableBody,
@@ -25,6 +25,7 @@ import {
   VirtualizedTableBody,
 } from '~/components/ui/virtualized-table';
 import { cn } from '~/lib/utils';
+import { ChevronDown, ChevronUp } from 'lucide-react-native';
 
 interface Row {
   invoice: string;
@@ -110,7 +111,7 @@ export default function VirtualizedListScreen() {
 function Row() {
   const { item } = useItemContext();
 
-  return item.getVisibleCells().map((cell) => {
+  return item.getVisibleCells().map((cell: Cell<Row, string>) => {
     return (
       <TableCell
         key={cell.id}
@@ -119,8 +120,28 @@ function Row() {
           width: cell.column.getSize(),
         }}
       >
-        <Text>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Text>
+        {cell.column.id === 'paymentMethod' ? (
+          <ExpandableCell cell={cell} />
+        ) : (
+          <Text>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Text>
+        )}
       </TableCell>
     );
   });
+}
+
+function ExpandableCell({ cell }: { cell: Cell<Row, string> }) {
+  const [expanded, setExpanded] = React.useState(false);
+
+  return (
+    <View>
+      <View className='flex-row items-center gap-2'>
+        <Text className='flex-1'>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Text>
+        <Button variant='ghost' size='icon' onPress={() => setExpanded(!expanded)}>
+          {expanded ? <ChevronUp className='h-4 w-4' /> : <ChevronDown className='h-4 w-4' />}
+        </Button>
+      </View>
+      {expanded && <Text>Expandable content</Text>}
+    </View>
+  );
 }

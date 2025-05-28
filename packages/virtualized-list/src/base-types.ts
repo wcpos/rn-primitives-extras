@@ -70,8 +70,6 @@ interface BaseItemContext<T = any> {
   item: T;
   /** Index of the item in the data array */
   index: number;
-  /** Style object for positioning (web) or layout (native) */
-  style?: StyleProp<ViewProps>;
 }
 
 export type {

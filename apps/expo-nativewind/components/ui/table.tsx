@@ -8,14 +8,14 @@ const Table = ({ className, ...props }: TablePrimitive.RootProps) => (
 );
 
 const TableHeader = ({ className, ...props }: TablePrimitive.HeaderProps) => (
-  <TablePrimitive.Header className={cn('border-border [&_tr]:border-b', className)} {...props} />
+  <TablePrimitive.Header className={cn('', className)} {...props} />
 );
 
 const TableHeaderRow = ({ className, ...props }: TablePrimitive.RowProps) => (
   <TextClassContext.Provider value='text-muted-foreground'>
     <TablePrimitive.HeaderRow
       className={cn(
-        'text-left justify-center font-medium [&:has([role=checkbox])]:pr-0',
+        'border-border border-b text-left justify-center font-medium [&:has([role=checkbox])]:pr-0',
         className
       )}
       {...props}

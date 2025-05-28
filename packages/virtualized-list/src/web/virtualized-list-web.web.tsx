@@ -70,69 +70,52 @@ function List<T>({
     display: 'block' as const,
   };
 
-  if (asChild) {
-    const wrapper = React.Children.only(children) as React.ReactElement<{
-      children?: React.ReactNode;
-    }>;
-    const innerContent = wrapper.props.children;
-
-    const virtualizedContent = rowVirtualizer.getVirtualItems().map((vItem) => {
+  const renderVirtualizedContent = (content: React.ReactNode) => {
+    return rowVirtualizer.getVirtualItems().map((vItem) => {
       const item = data[vItem.index];
-      const style = {
-        position: 'absolute' as const,
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: `${vItem.size}px`,
-        transform: horizontal ? undefined : `translateY(${vItem.start}px)`,
-      };
       const key = keyExtractor ? keyExtractor(item, vItem.index) : vItem.key;
 
       return (
         <ItemContext.Provider
           key={key}
-          value={{ item, index: vItem.index, style, rowVirtualizer } as BaseItemContext<T>}
+          value={
+            { item, index: vItem.index, rowVirtualizer, vItem, horizontal } as BaseItemContext<T>
+          }
         >
-          {innerContent}
+          {content}
         </ItemContext.Provider>
       );
     });
+  };
 
-    return React.cloneElement(wrapper, { style: containerStyle } as any, virtualizedContent);
+  if (asChild) {
+    const wrapper = React.Children.only(children) as React.ReactElement<{
+      children?: React.ReactNode;
+    }>;
+    const innerContent = wrapper.props.children;
+    return React.cloneElement(
+      wrapper,
+      { style: containerStyle } as any,
+      renderVirtualizedContent(innerContent)
+    );
   }
 
-  const virtualizedContent = rowVirtualizer.getVirtualItems().map((vItem) => {
-    const item = data[vItem.index];
-    const style = {
-      position: 'absolute' as const,
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: `${vItem.size}px`,
-      transform: horizontal ? undefined : `translateY(${vItem.start}px)`,
-    };
-    const key = keyExtractor ? keyExtractor(item, vItem.index) : vItem.key;
-
-    return (
-      <ItemContext.Provider
-        key={key}
-        value={{ item, index: vItem.index, style, rowVirtualizer } as BaseItemContext<T>}
-      >
-        {children}
-      </ItemContext.Provider>
-    );
-  });
-
-  return <View style={containerStyle}>{virtualizedContent}</View>;
+  return <View style={containerStyle}>{renderVirtualizedContent(children)}</View>;
 }
 
-function Item<T>(props: ItemProps<T>) {
-  const { style, index, rowVirtualizer } = useItemContext() as ItemContextType<T>;
+function Item<T>({ style, ...props }: ItemProps<T>) {
+  const { index, rowVirtualizer, vItem, horizontal } = useItemContext() as ItemContextType<T>;
 
   return (
     <View
       data-index={index}
-      style={style as any}
+      style={{
+        position: 'absolute' as const,
+        top: 0,
+        left: 0,
+        width: '100%',
+        transform: horizontal ? undefined : `translateY(${vItem.start}px)`,
+      }}
       {...props}
       ref={(node) => rowVirtualizer.measureElement(node)}
     />
