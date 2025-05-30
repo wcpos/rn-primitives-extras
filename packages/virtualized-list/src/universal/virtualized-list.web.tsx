@@ -19,14 +19,7 @@ function Root({ native: _native, style, web, ...props }: RootProps) {
   return <RootWeb {...props} {...web} />;
 }
 
-function List<T>({ native: _native, style, web, ...props }: ListProps<T>) {
-  if (style) {
-    return (
-      <View style={style} asChild>
-        <ListWeb {...props} {...web} />
-      </View>
-    );
-  }
+function List<T>({ native: _native, web, ...props }: ListProps<T>) {
   return <ListWeb {...props} {...web} />;
 }
 

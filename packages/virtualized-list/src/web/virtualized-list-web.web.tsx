@@ -4,7 +4,6 @@ import * as React from 'react';
 import type { BaseItemContext } from '../base-types';
 import { ItemContext, RootContext, useItemContext, useRootContext } from '../utils/contexts';
 import type { ItemContextType, ItemProps, ListProps, RootProps } from './types';
-import { SlottableWithNestedChildren } from '../utils/slottable-with-nested-children';
 
 function Root(props: RootProps) {
   const parentRef = React.useRef<HTMLDivElement>(null);
@@ -24,14 +23,21 @@ function Root(props: RootProps) {
 }
 
 function List<T>({
+  // take the `ref` prop from BaseListProps as your handle
   ref,
   data,
+  renderItem,
+  ListEmptyComponent = null,
+  // customizable wrapper
+  parentComponent: Parent = View as any,
+  parentProps,
+  // virtualization settings
   estimatedItemSize,
   overscan = 4,
-  horizontal,
+  horizontal = false,
   keyExtractor,
-  children,
-  asChild,
+  onEndReached,
+  onEndReachedThreshold = 0.5,
   ...rest
 }: ListProps<T>) {
   const { scrollElement } = useRootContext();
@@ -42,11 +48,6 @@ function List<T>({
     horizontal,
     overscan,
     estimateSize: () => estimatedItemSize,
-    // measure dynamic row height, except in firefox because it measures table border height incorrectly
-    measureElement:
-      typeof window !== 'undefined' && navigator.userAgent.indexOf('Firefox') === -1
-        ? (element) => element?.getBoundingClientRect().height
-        : undefined,
     ...rest,
   });
 
@@ -64,44 +65,61 @@ function List<T>({
       rowVirtualizer.scrollToOffset(offset, { behavior: animated ? 'smooth' : 'auto' }),
   }));
 
-  const containerStyle = {
-    position: 'relative' as const,
+  // // optional end-reached
+  // React.useEffect(() => {
+  //   if (typeof onEndReached === 'function') {
+  //     const items = rowVirtualizer.getVirtualItems();
+  //     const last = items[items.length - 1];
+  //     if (last && last.index >= data.length - 1 * onEndReachedThreshold) {
+  //       onEndReached();
+  //     }
+  //   }
+  // }, [rowVirtualizer.getVirtualItems(), data.length, onEndReached, onEndReachedThreshold]);
+
+  // // empty case
+  // if (data.length === 0) {
+  //   return <>{ListEmptyComponent}</>;
+  // }
+
+  // container style
+  const containerStyle: React.CSSProperties = {
+    position: 'relative',
     height: horizontal ? '100%' : `${rowVirtualizer.getTotalSize()}px`,
     width: horizontal ? `${rowVirtualizer.getTotalSize()}px` : '100%',
-    display: 'block' as const,
+    display: 'block',
   };
 
-  const renderVirtualizedContent = (content: React.ReactNode) => {
-    return rowVirtualizer.getVirtualItems().map((vItem) => {
-      const item = data[vItem.index];
-      const key = keyExtractor ? keyExtractor(item, vItem.index) : vItem.key;
+  // merge in any props (incl. style) for your wrapper
+  const wrapperProps = {
+    style: { ...containerStyle, ...(parentProps as any)?.style },
+    ...parentProps,
+  } as React.ComponentProps<typeof Parent>;
 
-      return (
-        <ItemContext.Provider
-          key={key}
-          value={
-            { item, index: vItem.index, rowVirtualizer, vItem, horizontal } as BaseItemContext<T>
-          }
-        >
-          {content}
-        </ItemContext.Provider>
-      );
-    });
-  };
+  return (
+    <Parent {...wrapperProps}>
+      {rowVirtualizer.getVirtualItems().map((vItem) => {
+        const item = data[vItem.index];
+        const key = keyExtractor ? keyExtractor(item, vItem.index) : String(vItem.key);
 
-  if (asChild) {
-    return (
-      <SlottableWithNestedChildren
-        asChild={asChild}
-        injectedProps={{ style: containerStyle }}
-        slotRenderer={renderVirtualizedContent}
-      >
-        {children}
-      </SlottableWithNestedChildren>
-    );
-  }
-
-  return <View style={containerStyle}>{renderVirtualizedContent(children)}</View>;
+        return (
+          <ItemContext.Provider
+            key={key}
+            value={
+              {
+                item,
+                index: vItem.index,
+                rowVirtualizer,
+                vItem,
+                horizontal,
+              } as BaseItemContext<T>
+            }
+          >
+            {renderItem({ item, index: vItem.index, target: 'Cell' })}
+          </ItemContext.Provider>
+        );
+      })}
+    </Parent>
+  );
 }
 
 function Item<T>({ style, ...props }: ItemProps<T>) {

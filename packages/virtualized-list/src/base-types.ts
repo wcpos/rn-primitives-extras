@@ -1,6 +1,6 @@
+import { View } from '@rn-primitives/core';
 import type { ViewPropsUniversal } from '@rn-primitives/core';
-
-import { StyleProp, ViewProps } from 'react-native';
+import type { FlashListProps } from '@shopify/flash-list';
 
 type BaseRootProps = ViewPropsUniversal;
 
@@ -16,13 +16,11 @@ interface BaseVirtualizedListHandle {
 type BaseListProps<T> = {
   ref?: React.Ref<any>;
 
-  children: React.ReactNode;
-
   /** Dataset – keep it immutable for perf */
   data: readonly T[];
 
   // /** Cell renderer – receives the logical index */
-  // renderItem: (params: { item: T; index: number }) => React.ReactElement | null;
+  renderItem: NonNullable<FlashListProps<T>['renderItem']>;
 
   /** Average/constant item size (px).  Required for perf */
   estimatedItemSize: number;
@@ -40,10 +38,17 @@ type BaseListProps<T> = {
   onEndReached?: () => void;
   onEndReachedThreshold?: number; // 0-1, default 0.5
 
-  /** Style object for positioning (web) or layout (native) */
-  style?: StyleProp<ViewProps>;
+  /** fallback UI when data.length === 0 */
+  ListEmptyComponent?: FlashListProps<T>['ListEmptyComponent'];
 
-  asChild?: boolean;
+  /**
+   * The host component you want to use as *the parent* of all your rows.
+   * Defaults to View.
+   */
+  parentComponent?: typeof View;
+
+  /** Any props you’d normally pass to that wrapper. */
+  parentProps?: Omit<React.ComponentProps<typeof View>, 'children'>;
 };
 
 type BaseItemProps<T> = ViewPropsUniversal & {
@@ -75,8 +80,8 @@ interface BaseItemContext<T = any> {
 export type {
   BaseItemContext,
   BaseItemProps,
-  BaseRootContext,
   BaseListProps,
+  BaseRootContext,
   BaseRootProps,
   BaseVirtualizedListHandle,
 };

@@ -38,19 +38,19 @@ export default function VirtualizedListScreen() {
         </View>
         <View className='flex-1'>
           <Virtualized>
-            <VirtualizedList ref={listRef} data={DATA} estimatedItemSize={24}>
-              <VirtualizedItem>
-                <Item />
-              </VirtualizedItem>
-            </VirtualizedList>
+            <VirtualizedList
+              ref={listRef}
+              data={DATA}
+              estimatedItemSize={24}
+              renderItem={({ item, index }) => (
+                <VirtualizedItem>
+                  <Text>{item.title}</Text>
+                </VirtualizedItem>
+              )}
+            />
           </Virtualized>
         </View>
       </View>
     </>
   );
-}
-
-function Item() {
-  const { item } = useItemContext();
-  return <Text>{item.title}</Text>;
 }

@@ -92,15 +92,18 @@ export default function VirtualizedListScreen() {
                 </TableHeaderRow>
               ))}
             </VirtualizedTableHeader>
-            <VirtualizedList data={table.getRowModel().rows} estimatedItemSize={30} asChild>
-              <VirtualizedTableBody>
+            <VirtualizedList
+              data={table.getRowModel().rows}
+              estimatedItemSize={30}
+              parentComponent={VirtualizedTableBody}
+              renderItem={({ item, index }) => (
                 <VirtualizedItem asChild>
                   <TableRow>
                     <Row />
                   </TableRow>
                 </VirtualizedItem>
-              </VirtualizedTableBody>
-            </VirtualizedList>
+              )}
+            />
           </VirtualizedTable>
         </Virtualized>
       </View>

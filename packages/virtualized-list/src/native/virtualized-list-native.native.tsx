@@ -4,7 +4,6 @@ import * as React from 'react';
 import type { BaseItemContext } from '../base-types';
 import { ItemContext, RootContext, useItemContext, useRootContext } from '../utils/contexts';
 import type { ItemProps, ListProps, RootProps } from './types';
-import { SlottableWithNestedChildren } from '../utils/slottable-with-nested-children';
 
 function Root(props: RootProps) {
   return (
@@ -16,16 +15,20 @@ function Root(props: RootProps) {
 
 function List<T>({
   ref,
-  overscan = 4,
-  keyExtractor,
-  children,
   data,
+  renderItem,
+  ListEmptyComponent = null,
+  parentComponent: Parent = View,
+  parentProps,
   estimatedItemSize,
-  // renderItem, // allow override for custom item rendering?
-  asChild,
-  ...rest
+  overscan = 4,
+  onEndReached,
+  onEndReachedThreshold = 0.5,
+  keyExtractor,
+  ...flashProps
 }: ListProps<T>) {
   const flashRef = React.useRef<FlashList<T>>(null);
+  const { scrollElement } = useRootContext();
 
   React.useImperativeHandle(ref, () => ({
     scrollToIndex: ({
@@ -46,29 +49,33 @@ function List<T>({
       flashRef.current?.scrollToOffset({ offset, animated }),
   }));
 
-  const flashList = (
-    <FlashList
-      ref={flashRef}
-      data={data}
-      keyExtractor={keyExtractor}
-      drawDistance={overscan * estimatedItemSize} // px
-      estimatedItemSize={estimatedItemSize}
-      renderItem={({ item, index }) => {
-        const key = keyExtractor ? keyExtractor(item, index) : String(index);
-        return (
-          <ItemContext.Provider value={{ item, index } as BaseItemContext<T>} key={key}>
-            {children}
-          </ItemContext.Provider>
-        );
-      }}
-      {...rest}
-    />
-  );
+  // merge user‐passed wrapper props (e.g. style) with required flex:1
+  const wrapperProps = {
+    style: { flex: 1, ...(parentProps?.style as any) },
+    ...parentProps,
+  } as React.ComponentProps<typeof Parent>;
 
   return (
-    <SlottableWithNestedChildren asChild={asChild} slotRenderer={() => flashList}>
-      {children}
-    </SlottableWithNestedChildren>
+    <Parent {...wrapperProps}>
+      <FlashList
+        ref={flashRef}
+        data={data}
+        renderItem={({ item, index, ...rest }) => {
+          const key = keyExtractor ? keyExtractor(item, index) : String(index);
+          return (
+            <ItemContext.Provider key={key} value={{ item, index } as BaseItemContext<T>}>
+              {renderItem({ item, index, ...rest })}
+            </ItemContext.Provider>
+          );
+        }}
+        estimatedItemSize={estimatedItemSize}
+        drawDistance={overscan * estimatedItemSize}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={onEndReachedThreshold}
+        ListEmptyComponent={ListEmptyComponent}
+        {...flashProps}
+      />
+    </Parent>
   );
 }
 

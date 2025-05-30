@@ -44,9 +44,14 @@ export default function ComboboxScreen() {
             }}
           >
             <ComboboxInput placeholder='Select a currency' />
-            <ComboboxList data={options} estimatedItemSize={24}>
-              <ComboboxEmpty>No results found</ComboboxEmpty>
-            </ComboboxList>
+            <ComboboxList
+              data={options}
+              estimatedItemSize={24}
+              renderItem={({ item }) => (
+                <ComboboxItem value={item.value}>{item.label}</ComboboxItem>
+              )}
+              ListEmptyComponent={<ComboboxEmpty>No results found</ComboboxEmpty>}
+            />
           </Combobox>
         </View>
       </View>
