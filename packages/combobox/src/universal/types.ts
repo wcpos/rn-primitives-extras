@@ -1,8 +1,10 @@
+import type { PressablePropsUniversal, TextPropsUniversal } from '@rn-primitives/core';
 import { Prettify } from '@rn-primitives/types';
 import type {
   BaseEmptyProps,
   BaseInputProps,
   BaseItemProps,
+  BaseItemTextProps,
   BaseListProps,
   BaseRootProps,
   BaseTriggerProps,
@@ -12,7 +14,7 @@ import type {
   EmptyPropsNativeOnly,
   InputPropsNativeOnly,
   ItemPropsNativeOnly,
-  ListPropsNativeOnly,
+  ItemTextPropsNativeOnly,
   RootPropsNativeOnly,
   TriggerPropsNativeOnly,
   ValuePropsNativeOnly,
@@ -21,7 +23,7 @@ import type {
   EmptyPropsWebOnly,
   InputPropsWebOnly,
   ItemPropsWebOnly,
-  ListPropsWebOnly,
+  ItemTextPropsWebOnly,
   RootPropsWebOnly,
   TriggerPropsWebOnly,
   ValuePropsWebOnly,
@@ -47,6 +49,22 @@ type EmptyProps = Prettify<
   BaseEmptyProps & { native?: EmptyPropsNativeOnly; web?: EmptyPropsWebOnly }
 >;
 
-type ItemProps = Prettify<BaseItemProps & { native?: ItemPropsNativeOnly; web?: ItemPropsWebOnly }>;
+type ItemProps = Prettify<
+  BaseItemProps & PressablePropsUniversal & { native?: ItemPropsNativeOnly; web?: ItemPropsWebOnly }
+>;
 
-export type { EmptyProps, InputProps, ItemProps, ListProps, RootProps, TriggerProps, ValueProps };
+type ItemTextProps = Prettify<
+  BaseItemTextProps &
+    TextPropsUniversal & { native?: ItemTextPropsNativeOnly; web?: ItemTextPropsWebOnly }
+>;
+
+export type {
+  EmptyProps,
+  InputProps,
+  ItemProps,
+  ItemTextProps,
+  ListProps,
+  RootProps,
+  TriggerProps,
+  ValueProps,
+};

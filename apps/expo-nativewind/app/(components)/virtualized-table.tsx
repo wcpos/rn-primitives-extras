@@ -1,31 +1,22 @@
-import { Stack } from 'expo-router';
-import * as React from 'react';
 import { Platform, View } from '@rn-primitives/core';
+import { Cell, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { Stack } from 'expo-router';
+import { ChevronDown, ChevronUp } from 'lucide-react-native';
+import * as React from 'react';
+import { Button } from '~/components/ui/button';
+import { TableCell, TableHeaderCell, TableHeaderRow, TableRow } from '~/components/ui/table';
+import { Text } from '~/components/ui/text';
 import {
-  Virtualized,
   useItemContext,
+  Virtualized,
   VirtualizedItem,
   VirtualizedList,
 } from '~/components/ui/virtualized-list';
-import { Text } from '~/components/ui/text';
-import { Button } from '~/components/ui/button';
-import { Cell, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableHeaderRow,
-  TableRow,
-} from '~/components/ui/table';
 import {
   VirtualizedTable,
-  VirtualizedTableHeader,
   VirtualizedTableBody,
+  VirtualizedTableHeader,
 } from '~/components/ui/virtualized-table';
-import { cn } from '~/lib/utils';
-import { ChevronDown, ChevronUp } from 'lucide-react-native';
 
 interface Row {
   invoice: string;
@@ -96,6 +87,11 @@ export default function VirtualizedListScreen() {
               data={table.getRowModel().rows}
               estimatedItemSize={30}
               parentComponent={VirtualizedTableBody}
+              parentProps={{
+                onLayout: (event) => {
+                  console.log(event.nativeEvent.layout.height);
+                },
+              }}
               renderItem={({ item, index }) => (
                 <VirtualizedItem asChild>
                   <TableRow>

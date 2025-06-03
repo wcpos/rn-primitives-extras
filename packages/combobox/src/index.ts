@@ -1,11 +1,12 @@
-export { Root, Trigger, Value, Input, List, Empty, Item } from './universal/combobox';
+export { Empty, Input, Item, ItemText, List, Root, Trigger, Value } from './universal/combobox';
 
 export type {
+  EmptyProps,
+  InputProps,
+  ItemProps,
+  ItemTextProps,
+  ListProps,
   RootProps,
   TriggerProps,
   ValueProps,
-  InputProps,
-  ListProps,
-  EmptyProps,
-  ItemProps,
 } from './universal/types';

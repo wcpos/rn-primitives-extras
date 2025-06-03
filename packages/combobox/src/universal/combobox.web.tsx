@@ -1,6 +1,9 @@
+import { Pressable } from '@rn-primitives/core';
+import { mergeProps } from '@rn-primitives/utils';
 import {
   Empty as EmptyWeb,
   Input as InputWeb,
+  ItemText as ItemTextWeb,
   Item as ItemWeb,
   List as ListWeb,
   Root as RootWeb,
@@ -11,6 +14,7 @@ import type {
   EmptyProps,
   InputProps,
   ItemProps,
+  ItemTextProps,
   ListProps,
   RootProps,
   TriggerProps,
@@ -41,8 +45,18 @@ function Empty({ native: _native, web, ...props }: EmptyProps) {
   return <EmptyWeb {...props} {...web} />;
 }
 
-function Item({ native: _native, web, ...props }: ItemProps) {
-  return <ItemWeb {...props} {...web} />;
+const DEFAULT_PRESSABLE_WEB = { as: 'div' } as const;
+
+function Item({ value, label, native: _native, web, ...props }: ItemProps) {
+  return (
+    <ItemWeb value={value} label={label} asChild>
+      <Pressable web={mergeProps(DEFAULT_PRESSABLE_WEB, web)} {...props} />
+    </ItemWeb>
+  );
 }
 
-export { Empty, Input, Item, List, Root, Trigger, Value };
+function ItemText({ native: _native, web, ...props }: ItemTextProps) {
+  return <ItemTextWeb {...props} {...web} />;
+}
+
+export { Empty, Input, Item, ItemText, List, Root, Trigger, Value };

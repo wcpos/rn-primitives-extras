@@ -1,14 +1,15 @@
 import { Text, View } from '@rn-primitives/core/dist/native';
+import { TextInput } from 'react-native';
 import type {
   EmptyProps,
   InputProps,
   ItemProps,
+  ItemTextProps,
   ListProps,
   RootProps,
   TriggerProps,
   ValueProps,
 } from './types';
-import { TextInput } from 'react-native';
 
 function Root(props: RootProps) {
   return (
@@ -60,6 +61,10 @@ function Item(props: ItemProps) {
       <Text>Combobox</Text>
     </View>
   );
+}
+
+function ItemText(props: ItemTextProps) {
+  return <Text>Combobox</Text>;
 }
 
 export { Empty, Input, Item, List, Root, Trigger, Value };

@@ -1,13 +1,15 @@
+import type { PressableProps, TextProps } from '@rn-primitives/core/dist/native';
+import type { TextInputProps } from 'react-native';
 import type {
   BaseEmptyProps,
   BaseInputProps,
   BaseItemProps,
+  BaseItemTextProps,
   BaseListProps,
   BaseRootProps,
   BaseTriggerProps,
   BaseValueProps,
 } from '../base-types';
-import type { TextInputProps } from 'react-native';
 
 type RootProps = BaseRootProps & RootPropsNativeOnly;
 type RootPropsNativeOnly = {};
@@ -28,7 +30,10 @@ type EmptyProps = BaseEmptyProps & EmptyPropsNativeOnly;
 type EmptyPropsNativeOnly = {};
 
 type ItemProps = BaseItemProps & ItemPropsNativeOnly;
-type ItemPropsNativeOnly = {};
+type ItemPropsNativeOnly = PressableProps;
+
+type ItemTextProps = BaseItemTextProps & ItemTextPropsNativeOnly;
+type ItemTextPropsNativeOnly = TextProps;
 
 export type {
   EmptyProps,
@@ -37,6 +42,8 @@ export type {
   InputPropsNativeOnly,
   ItemProps,
   ItemPropsNativeOnly,
+  ItemTextProps,
+  ItemTextPropsNativeOnly,
   ListProps,
   ListPropsNativeOnly,
   RootProps,

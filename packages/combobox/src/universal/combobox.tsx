@@ -2,15 +2,18 @@ import {
   Empty as EmptyNative,
   Input as InputNative,
   Item as ItemNative,
+  ItemText as ItemTextNative,
   List as ListNative,
   Root as RootNative,
   Trigger as TriggerNative,
   Value as ValueNative,
+  type ItemProps as ItemPropsNative,
 } from '../native';
 import type {
   EmptyProps,
   InputProps,
   ItemProps,
+  ItemTextProps,
   ListProps,
   RootProps,
   TriggerProps,
@@ -41,8 +44,12 @@ function Empty({ web: _web, native, ...props }: EmptyProps) {
   return <EmptyNative {...props} {...native} />;
 }
 
-function Item({ web: _web, native, ...props }: ItemProps) {
-  return <ItemNative {...props} {...native} />;
+function Item({ ref, web: _web, native, ...props }: ItemProps) {
+  return <ItemNative ref={ref as ItemPropsNative['ref']} {...props} {...native} />;
 }
 
-export { Empty, Input, Item, List, Root, Trigger, Value };
+function ItemText({ web: _web, native, ...props }: ItemTextProps) {
+  return <ItemTextNative {...props} {...native} />;
+}
+
+export { Empty, Input, Item, ItemText, List, Root, Trigger, Value };

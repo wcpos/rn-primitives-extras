@@ -28,7 +28,6 @@ function List<T>({
   ...flashProps
 }: ListProps<T>) {
   const flashRef = React.useRef<FlashList<T>>(null);
-  const { scrollElement } = useRootContext();
 
   React.useImperativeHandle(ref, () => ({
     scrollToIndex: ({
@@ -51,7 +50,7 @@ function List<T>({
 
   // merge user‐passed wrapper props (e.g. style) with required flex:1
   const wrapperProps = {
-    style: { flex: 1, ...(parentProps?.style as any) },
+    // style: { flex: 1, ...(parentProps?.style as any) },
     ...parentProps,
   } as React.ComponentProps<typeof Parent>;
 

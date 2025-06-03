@@ -2,6 +2,7 @@ import type {
   EmptyProps,
   InputProps,
   ItemProps,
+  ItemTextProps,
   ListProps,
   RootProps,
   TriggerProps,
@@ -57,4 +58,11 @@ function Item(props: ItemProps) {
   return null;
 }
 
-export { Empty, Input, Item, List, Root, Trigger, Value };
+function ItemText(props: ItemTextProps) {
+  if (process.env.NODE_ENV === 'development') {
+    console.log('`ItemText` from @rn-primitives/combobox/native is only supported on native.');
+  }
+  return null;
+}
+
+export { Empty, Input, Item, ItemText, List, Root, Trigger, Value };

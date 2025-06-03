@@ -1,11 +1,14 @@
+import type { PressableProps } from '@rn-primitives/core/dist/web';
 import type {
   BaseEmptyProps,
   BaseInputProps,
   BaseItemProps,
+  BaseItemTextProps,
   BaseListProps,
   BaseRootProps,
   BaseTriggerProps,
   BaseValueProps,
+  Option,
 } from '../base-types';
 
 type RootProps = BaseRootProps & RootPropsWebOnly;
@@ -20,14 +23,17 @@ type ValuePropsWebOnly = {};
 type InputProps = BaseInputProps & InputPropsWebOnly;
 type InputPropsWebOnly = Omit<React.ComponentProps<'input'>, 'value' | 'placeholder'>;
 
-type ListProps<T> = BaseListProps<T> & ListPropsWebOnly;
+type ListProps<TItem extends Option = Option> = BaseListProps<TItem> & ListPropsWebOnly;
 type ListPropsWebOnly = {};
 
 type EmptyProps = BaseEmptyProps & EmptyPropsWebOnly;
 type EmptyPropsWebOnly = {};
 
-type ItemProps = BaseItemProps & ItemPropsWebOnly;
-type ItemPropsWebOnly = {};
+type ItemProps = BaseItemProps & PressableProps<'div'>;
+type ItemPropsWebOnly = React.ComponentProps<'div'>;
+
+type ItemTextProps = BaseItemTextProps & ItemTextPropsWebOnly;
+type ItemTextPropsWebOnly = {};
 
 export type {
   EmptyProps,
@@ -36,6 +42,8 @@ export type {
   InputPropsWebOnly,
   ItemProps,
   ItemPropsWebOnly,
+  ItemTextProps,
+  ItemTextPropsWebOnly,
   ListProps,
   ListPropsWebOnly,
   RootProps,

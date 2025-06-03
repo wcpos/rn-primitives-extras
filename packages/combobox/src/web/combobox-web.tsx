@@ -2,6 +2,7 @@ import type {
   EmptyProps,
   InputProps,
   ItemProps,
+  ItemTextProps,
   ListProps,
   RootProps,
   TriggerProps,
@@ -57,4 +58,11 @@ const Item = (() => {
   return null;
 }) as React.FC<ItemProps>;
 
-export { Empty, Input, Item, List, Root, Trigger, Value };
+const ItemText = (() => {
+  if (process.env.NODE_ENV === 'development') {
+    console.log('`ItemText` from @rn-primitives/combobox/web is only supported on web.');
+  }
+  return null;
+}) as React.FC<ItemTextProps>;
+
+export { Empty, Input, Item, ItemText, List, Root, Trigger, Value };

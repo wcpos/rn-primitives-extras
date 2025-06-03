@@ -1,9 +1,10 @@
-export { Empty, Input, Item, List, Root, Trigger, Value } from './combobox-web';
+export { Empty, Input, Item, ItemText, List, Root, Trigger, Value } from './combobox-web';
 
 export type {
   EmptyProps,
   InputProps,
   ItemProps,
+  ItemTextProps,
   ListProps,
   RootProps,
   TriggerProps,

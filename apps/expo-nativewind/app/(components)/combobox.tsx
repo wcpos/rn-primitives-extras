@@ -6,6 +6,7 @@ import {
   ComboboxEmpty,
   ComboboxInput,
   ComboboxItem,
+  ComboboxItemText,
   ComboboxList,
 } from '~/components/ui/combobox';
 
@@ -48,7 +49,9 @@ export default function ComboboxScreen() {
               data={options}
               estimatedItemSize={24}
               renderItem={({ item }) => (
-                <ComboboxItem value={item.value}>{item.label}</ComboboxItem>
+                <ComboboxItem value={item.value} label={item.label}>
+                  <ComboboxItemText>{item.label}</ComboboxItemText>
+                </ComboboxItem>
               )}
               ListEmptyComponent={<ComboboxEmpty>No results found</ComboboxEmpty>}
             />
