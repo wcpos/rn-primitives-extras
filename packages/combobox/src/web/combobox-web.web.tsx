@@ -4,7 +4,7 @@ import * as VirtualizedListPrimitive from '@rn-primitives/virtualized-list';
 import React from 'react';
 import type { Option } from '../base-types';
 import { RootContext, useRootContext } from '../utils/contexts';
-import { filter } from '../utils/filter';
+import { defaultFilter } from '../utils/filter';
 import type {
   EmptyProps,
   InputProps,
@@ -61,7 +61,7 @@ function Value(props: ValueProps) {
 }
 
 function Input(props: InputProps) {
-  const { value: selectedValue, onFilterChange } = useRootContext();
+  const { onFilterChange } = useRootContext();
   const [isPending, startTransition] = React.useTransition();
   const [inputValue, setInputValue] = React.useState('');
 
@@ -94,12 +94,18 @@ function List({
   data,
   estimatedItemSize,
   shouldFilter = true,
+  filter = defaultFilter,
   ...restVirtualizedListProps
 }: ListProps<Option>) {
   const { filterValue } = useRootContext();
 
-  const filteredData =
-    shouldFilter && filterValue ? filter(data ? [...data] : [], filterValue) : data;
+  const filteredData = React.useMemo(() => {
+    if (!shouldFilter || !filterValue) {
+      return data;
+    }
+    const dataToFilter = data ? [...data] : [];
+    return filter(dataToFilter, filterValue);
+  }, [data, filterValue, shouldFilter, filter]);
 
   return (
     <VirtualizedListPrimitive.Root>
@@ -112,11 +118,11 @@ function List({
   );
 }
 
-function Empty({ children }: EmptyProps) {
-  return <div>{children}</div>;
+function Empty({ children, ...props }: EmptyProps) {
+  return <div {...props}>{children}</div>;
 }
 
-function Item({ value, label, asChild, ...props }: ItemProps) {
+function Item({ value, label, ...props }: ItemProps) {
   const { value: selectedValue, onValueChange } = useRootContext();
 
   return (

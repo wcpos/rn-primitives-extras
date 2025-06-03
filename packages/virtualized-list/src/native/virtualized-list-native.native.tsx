@@ -48,10 +48,10 @@ function List<T>({
       flashRef.current?.scrollToOffset({ offset, animated }),
   }));
 
-  // merge user‐passed wrapper props (e.g. style) with required flex:1
+  // merge user‐passed wrapper props (e.g. style) with required
   const wrapperProps = {
-    // style: { flex: 1, ...(parentProps?.style as any) },
     ...parentProps,
+    style: { height: '100%', ...((parentProps?.style || {}) as any) },
   } as React.ComponentProps<typeof Parent>;
 
   return (

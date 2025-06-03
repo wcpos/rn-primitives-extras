@@ -1,3 +1,4 @@
+import type { Option } from '../base-types';
 import type {
   EmptyProps,
   InputProps,
@@ -37,7 +38,7 @@ function Input(props: InputProps) {
   return null;
 }
 
-function List<T>(props: ListProps<T>) {
+function List(props: ListProps<Option>) {
   if (process.env.NODE_ENV === 'development') {
     console.log('`List` from @rn-primitives/combobox/native is only supported on native.');
   }

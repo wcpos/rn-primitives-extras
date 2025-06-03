@@ -1,3 +1,4 @@
+import type { Option } from '../base-types';
 import type {
   EmptyProps,
   InputProps,
@@ -42,7 +43,7 @@ const List = (() => {
     console.log('`List` from @rn-primitives/combobox/web is only supported on web.');
   }
   return null;
-}) as React.FC<ListProps<any>>;
+}) as React.FC<ListProps<Option>>;
 
 const Empty = (() => {
   if (process.env.NODE_ENV === 'development') {

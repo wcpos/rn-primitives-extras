@@ -1,14 +1,6 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableHeaderRow,
-  TableRow,
-} from '~/components/ui/table';
 import { Platform } from '@rn-primitives/core';
-import type { HeaderProps, RootProps, BodyProps } from '@rn-primitives/table';
+import type { BodyProps, HeaderProps, RootProps } from '@rn-primitives/table';
+import { Table, TableBody, TableHeader } from '~/components/ui/table';
 import { cn } from '~/lib/utils';
 
 /*
@@ -31,15 +23,12 @@ function VirtualizedTableHeader({ className, ...props }: HeaderProps) {
 }
 
 /**
- * For native: I'm not sure why flex-none is needed here, but FlashList want a h-full
+ * For native: I'm not sure why flex-none is needed here
  */
 function VirtualizedTableBody({ className, ...props }: BodyProps) {
   return (
-    <TableBody
-      className={cn(Platform.OS === 'web' ? 'grid' : 'flex-none h-full', className)}
-      {...props}
-    />
+    <TableBody className={cn(Platform.OS === 'web' ? 'grid' : 'flex-none', className)} {...props} />
   );
 }
 
-export { VirtualizedTable, VirtualizedTableHeader, VirtualizedTableBody };
+export { VirtualizedTable, VirtualizedTableBody, VirtualizedTableHeader };

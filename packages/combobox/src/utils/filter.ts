@@ -1,7 +1,7 @@
 import type { Option } from '../base-types';
 import { commandScore } from './fuzzy-search';
 
-export function filter(items: Option[], query: string, threshold = 0.1): Option[] {
+export function defaultFilter(items: Option[], query: string, threshold = 0.1): Option[] {
   return (
     items
       .map((item) => ({

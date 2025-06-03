@@ -36,6 +36,7 @@ type BaseInputProps = {
 export type BaseListProps<T> = Omit<VirtualizedListPrimitiveProps<T>, 'data'> & {
   data: ReadonlyArray<T>;
   shouldFilter?: boolean;
+  filter?: (data: T[], filterValue: string, threshold?: number) => T[];
 };
 
 type BaseEmptyProps = {

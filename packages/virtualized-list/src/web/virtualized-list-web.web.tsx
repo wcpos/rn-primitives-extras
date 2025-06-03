@@ -23,7 +23,6 @@ function Root(props: RootProps) {
 }
 
 function List<T>({
-  // take the `ref` prop from BaseListProps as your handle
   ref,
   data,
   renderItem,
@@ -76,11 +75,6 @@ function List<T>({
   //   }
   // }, [rowVirtualizer.getVirtualItems(), data.length, onEndReached, onEndReachedThreshold]);
 
-  // // empty case
-  // if (data.length === 0) {
-  //   return <>{ListEmptyComponent}</>;
-  // }
-
   // container style
   const containerStyle: React.CSSProperties = {
     position: 'relative',
@@ -91,13 +85,28 @@ function List<T>({
 
   // merge in any props (incl. style) for your wrapper
   const wrapperProps = {
-    style: { ...containerStyle, ...(parentProps as any)?.style },
     ...parentProps,
+    style: { ...containerStyle, ...((parentProps as any)?.style || {}) },
   } as React.ComponentProps<typeof Parent>;
+
+  const virtualItems = rowVirtualizer.getVirtualItems();
+
+  // empty case
+  if (virtualItems.length === 0) {
+    if (!ListEmptyComponent) {
+      return <Parent {...parentProps} />;
+    }
+
+    return (
+      <Parent {...parentProps}>
+        {React.isValidElement(ListEmptyComponent) ? ListEmptyComponent : <ListEmptyComponent />}
+      </Parent>
+    );
+  }
 
   return (
     <Parent {...wrapperProps}>
-      {rowVirtualizer.getVirtualItems().map((vItem) => {
+      {virtualItems.map((vItem) => {
         const item = data[vItem.index];
         const key = keyExtractor ? keyExtractor(item, vItem.index) : String(vItem.key);
 

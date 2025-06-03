@@ -88,8 +88,10 @@ export default function VirtualizedListScreen() {
               estimatedItemSize={30}
               parentComponent={VirtualizedTableBody}
               parentProps={{
-                onLayout: (event) => {
-                  console.log(event.nativeEvent.layout.height);
+                native: {
+                  onLayout: (event) => {
+                    console.log(event.nativeEvent.layout.height);
+                  },
                 },
               }}
               renderItem={({ item, index }) => (
